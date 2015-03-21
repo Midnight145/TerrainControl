@@ -53,7 +53,7 @@ public class TCWorldType extends WorldType
         ForgeWorld.restoreBiomes();
 
         // Load everything
-        File worldDirectory = new File(TerrainControl.getEngine().getTCDataFolder(), "worlds" + File.separator + world.getSaveHandler().getWorldDirectoryName());
+        File worldDirectory = new File (world.getSaveHandler().getWorldDirectory(), "TerrainControl");
 
         if (!worldDirectory.exists())
         {
@@ -81,7 +81,7 @@ public class TCWorldType extends WorldType
      * TCWorldChunkManager is the right option.
      * @param world         ForgeWorld instance, needed to instantiate the
      *                      WorldChunkManager.
-     * @param biomeGenClass Biome generator class.
+     * @param biomeGenerator Biome generator.
      * @return The most appropriate WorldChunkManager.
      */
     private WorldChunkManager createWorldChunkManager(ForgeWorld world, BiomeGenerator biomeGenerator)
