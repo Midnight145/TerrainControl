@@ -25,8 +25,11 @@ public class ForgeBiome implements LocalBiome
         // Store the previous biome in a variable
         BiomeGenBase previousBiome = BiomeGenBase.getBiome(biomeIds.getSavedId());
 
+        BiomeGenCustom custom = new BiomeGenCustom(biomeConfig.getName(), biomeIds);
+        custom.color = biomeConfig.biomeColor;
+        
         // Register new biome
-        ForgeBiome biome = new ForgeBiome(biomeConfig, new BiomeGenCustom(biomeConfig.getName(), biomeIds));
+        ForgeBiome biome = new ForgeBiome(biomeConfig, custom);
 
         // Restore settings of the previous biome
         if (previousBiome != null)
