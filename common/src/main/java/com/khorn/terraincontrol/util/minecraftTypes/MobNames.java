@@ -20,7 +20,8 @@ public enum MobNames {
 	SHEEP("Sheep", "sheep"), SILVERFISH("Silverfish", "silverfish", "silver_fish"), SKELETON("Skeleton", "skeleton"),
 	SLIME("Slime", "slime"), SNOWMAN("SnowMan", "snowman"), SPIDER("Spider", "spider"), SQUID("Squid", "squid"),
 	VILLAGER("Villager", "villager"), WITCH("Witch", "witch"), WITHER("WitherBoss", "witherboss", "wither_boss", "Wither", "wither"),
-	WOLF("Wolf", "wolf"), ZOMBIE("Zombie", "zombie"), PECH("Thaumcraft.Pech", "Pech"), WISP("Thaumcraft.Wisp", "Wisp");
+	WOLF("Wolf", "wolf"), ZOMBIE("Zombie", "zombie"), PECH("Thaumcraft.Pech", "Pech"), WISP("Thaumcraft.Wisp", "Wisp"),
+	FIREBAT("Thaumcraft.Firebat", "Firebat");
 
 	// Contains all aliases (alias, internalName)
 	private static Map<String, String> mobAliases = new HashMap<String, String>();
