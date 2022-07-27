@@ -39,120 +39,107 @@ import java.util.Map;
  * Control will make sure that the structure gets spawned correctly, chunk
  * for chunk.
  */
-public class CustomObjectManager
-{
+public class CustomObjectManager {
 
-    private final Map<String, CustomObjectLoader> loaders;
-    private final CustomObjectCollection globalCustomObjects;
+	private final Map<String, CustomObjectLoader> loaders;
+	private final CustomObjectCollection globalCustomObjects;
 
-    /**
-     * @deprecated Use {@link #getGlobalObjects()} instead.
-     */
-    @Deprecated
-    public final Map<String, CustomObject> globalObjects;
+	/**
+	 * @deprecated Use {@link #getGlobalObjects()} instead.
+	 */
+	@Deprecated
+	public final Map<String, CustomObject> globalObjects;
 
-    public CustomObjectManager()
-    {
-        // These are the actual lists, not just a copy.
-        this.loaders = new HashMap<String, CustomObjectLoader>();
+	public CustomObjectManager() {
+		// These are the actual lists, not just a copy.
+		this.loaders = new HashMap<String, CustomObjectLoader>();
 
-        // Register loaders
-        registerCustomObjectLoader("bo2", new BO2Loader());
-        registerCustomObjectLoader("bo3", new BO3Loader());
+		// Register loaders
+		registerCustomObjectLoader("bo2", new BO2Loader());
+		registerCustomObjectLoader("bo3", new BO3Loader());
 
-        this.globalCustomObjects = new CustomObjectCollection();
-        this.globalObjects = globalCustomObjects.accessMap();
+		this.globalCustomObjects = new CustomObjectCollection();
+		this.globalObjects = globalCustomObjects.accessMap();
 
-        // Put some default CustomObjects
-        for (TreeType type : TreeType.values())
-        {
-            registerGlobalObject(new TreeObject(type));
-        }
-        registerGlobalObject(new UseWorld());
-        registerGlobalObject(new UseBiome());
-        registerGlobalObject(new UseWorldAll());
-        registerGlobalObject(new UseBiomeAll());
-    }
+		// Put some default CustomObjects
+		for (TreeType type : TreeType.values()) {
+			registerGlobalObject(new TreeObject(type));
+		}
+		registerGlobalObject(new UseWorld());
+		registerGlobalObject(new UseBiome());
+		registerGlobalObject(new UseWorldAll());
+		registerGlobalObject(new UseBiomeAll());
+	}
 
-    public void loadGlobalObjects()
-    {
-        // Load all global objects (they can overwrite special objects)
-        this.globalCustomObjects.load(this.loaders, TerrainControl.getEngine().getGlobalObjectsDirectory());
-        TerrainControl.log(LogMarker.INFO, "{} Global custom objects loaded", globalCustomObjects.getAll().size());
-    }
+	public void loadGlobalObjects() {
+		// Load all global objects (they can overwrite special objects)
+		this.globalCustomObjects.load(this.loaders, TerrainControl.getEngine().getGlobalObjectsDirectory());
+		TerrainControl.log(LogMarker.INFO, "{} Global custom objects loaded", globalCustomObjects.getAll().size());
+	}
 
-    /**
-     * Registers a custom object loader. Register before the config files are
-     * getting loaded, please!
-     *
-     * @param extension The extension of the file. This loader will be responsible for
-     *                  all files with this extension.
-     * @param loader    The loader.
-     */
-    public void registerCustomObjectLoader(String extension, CustomObjectLoader loader)
-    {
-        loaders.put(extension.toLowerCase(), loader);
-    }
+	/**
+	 * Registers a custom object loader. Register before the config files are
+	 * getting loaded, please!
+	 *
+	 * @param extension The extension of the file. This loader will be responsible
+	 *                  for
+	 *                  all files with this extension.
+	 * @param loader    The loader.
+	 */
+	public void registerCustomObjectLoader(String extension, CustomObjectLoader loader) {
+		loaders.put(extension.toLowerCase(), loader);
+	}
 
-    /**
-     * Register a global object.
-     *
-     * @param object The object to register.
-     */
-    public void registerGlobalObject(CustomObject object)
-    {
-        globalCustomObjects.addLoadedObject(object);
-    }
+	/**
+	 * Register a global object.
+	 *
+	 * @param object The object to register.
+	 */
+	public void registerGlobalObject(CustomObject object) {
+		globalCustomObjects.addLoadedObject(object);
+	}
 
-    /**
-     * Gets all global objects.
-     * @return The global objects.
-     */
-    public CustomObjectCollection getGlobalObjects()
-    {
-        return globalCustomObjects;
-    }
+	/**
+	 * Gets all global objects.
+	 * 
+	 * @return The global objects.
+	 */
+	public CustomObjectCollection getGlobalObjects() { return globalCustomObjects; }
 
-    /**
-     * Gets an unmodifiable view of all object loaders, indexed by the
-     * lowercase extension without the dot (for example "bo3").
-     * @return The loaders.
-     */
-    public Map<String, CustomObjectLoader> getObjectLoaders()
-    {
-        return Collections.unmodifiableMap(loaders);
-    }
+	/**
+	 * Gets an unmodifiable view of all object loaders, indexed by the
+	 * lowercase extension without the dot (for example "bo3").
+	 * 
+	 * @return The loaders.
+	 */
+	public Map<String, CustomObjectLoader> getObjectLoaders() { return Collections.unmodifiableMap(loaders); }
 
-    /**
-     * Calls the {@link CustomObjectLoader#onShutdown()} method of each
-     * loader, then unloads them.
-     */
-    public void shutdown()
-    {
-        for (CustomObjectLoader loader : loaders.values())
-        {
-            loader.onShutdown();
-        }
-        loaders.clear();
-    }
+	/**
+	 * Calls the {@link CustomObjectLoader#onShutdown()} method of each
+	 * loader, then unloads them.
+	 */
+	public void shutdown() {
+		for (CustomObjectLoader loader : loaders.values()) {
+			loader.onShutdown();
+		}
+		loaders.clear();
+	}
 
-    /**
-     * @deprecated Use
-     * {@code world.getConfigs().getCustomObjects().getObjectByName(String)}.
-     */
-    @Deprecated
-    public CustomObject getCustomObject(String name, LocalWorld world)
-    {
-        return world.getConfigs().getCustomObjects().getObjectByName(name);
-    }
+	/**
+	 * @deprecated Use
+	 *             {@code world.getConfigs().getCustomObjects().getObjectByName(String)}.
+	 */
+	@Deprecated
+	public CustomObject getCustomObject(String name, LocalWorld world) {
+		return world.getConfigs().getCustomObjects().getObjectByName(name);
+	}
 
-    /**
-     * @deprecated Use {@code getGlobalObjects().getObjectByName(String)}.
-     */
-    @Deprecated
-    public CustomObject getCustomObject(String name)
-    {
-        return globalCustomObjects.getObjectByName(name);
-    }
+	/**
+	 * @deprecated Use {@code getGlobalObjects().getObjectByName(String)}.
+	 */
+	@Deprecated
+	public CustomObject getCustomObject(String name) {
+		return globalCustomObjects.getObjectByName(name);
+	}
 
 }

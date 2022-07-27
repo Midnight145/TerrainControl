@@ -16,147 +16,132 @@ import com.khorn.terraincontrol.util.minecraftTypes.DefaultMaterial;
 
 import java.util.Random;
 
-public class ObjectSpawner
-{
+public class ObjectSpawner {
 
-    private final ConfigProvider configProvider;
-    private final Random rand;
-    private final LocalWorld world;
-    private final NoiseGeneratorNewOctaves noiseGen;
-    private double[] reusableChunkNoiseArray;
+	private final ConfigProvider configProvider;
+	private final Random rand;
+	private final LocalWorld world;
+	private final NoiseGeneratorNewOctaves noiseGen;
+	private double[] reusableChunkNoiseArray;
 
-    public ObjectSpawner(ConfigProvider configProvider, LocalWorld localWorld)
-    {
-        this.configProvider = configProvider;
-        this.rand = new Random();
-        this.world = localWorld;
-        this.noiseGen = new NoiseGeneratorNewOctaves(new Random(world.getSeed()), 4);
-    }
+	public ObjectSpawner(ConfigProvider configProvider, LocalWorld localWorld) {
+		this.configProvider = configProvider;
+		this.rand = new Random();
+		this.world = localWorld;
+		this.noiseGen = new NoiseGeneratorNewOctaves(new Random(world.getSeed()), 4);
+	}
 
-    public void populate(ChunkCoordinate chunkCoord)
-    {
-        // Get the corner block coords
-        int x = chunkCoord.getChunkX() * 16;
-        int z = chunkCoord.getChunkZ() * 16;
+	public void populate(ChunkCoordinate chunkCoord) {
+		// Get the corner block coords
+		int x = chunkCoord.getChunkX() * 16;
+		int z = chunkCoord.getChunkZ() * 16;
 
-        // Get the biome of the other corner
-        LocalBiome biome = world.getBiome(x + 15, z + 15);
+		// Get the biome of the other corner
+		LocalBiome biome = world.getBiome(x + 15, z + 15);
 
-        // Null check
-        if (biome == null)
-        {
-            TerrainControl.log(LogMarker.DEBUG, "Unknown biome at {},{}  (chunk {}). Population failed.", x + 15, z + 15, chunkCoord);
-            return;
-        }
+		// Null check
+		if (biome == null) {
+			TerrainControl.log(LogMarker.DEBUG, "Unknown biome at {},{}  (chunk {}). Population failed.", x + 15, z + 15, chunkCoord);
+			return;
+		}
 
-        BiomeConfig biomeConfig = biome.getBiomeConfig();
+		BiomeConfig biomeConfig = biome.getBiomeConfig();
 
-        // Get the random generator
-        WorldConfig worldConfig = configProvider.getWorldConfig();
-        long resourcesSeed = worldConfig.resourcesSeed != 0L ? worldConfig.resourcesSeed : world.getSeed();
-        this.rand.setSeed(resourcesSeed);
-        long l1 = this.rand.nextLong() / 2L * 2L + 1L;
-        long l2 = this.rand.nextLong() / 2L * 2L + 1L;
-        this.rand.setSeed(chunkCoord.getChunkX() * l1 + chunkCoord.getChunkZ() * l2 ^ resourcesSeed);
+		// Get the random generator
+		WorldConfig worldConfig = configProvider.getWorldConfig();
+		long resourcesSeed = worldConfig.resourcesSeed != 0L ? worldConfig.resourcesSeed : world.getSeed();
+		this.rand.setSeed(resourcesSeed);
+		long l1 = this.rand.nextLong() / 2L * 2L + 1L;
+		long l2 = this.rand.nextLong() / 2L * 2L + 1L;
+		this.rand.setSeed(chunkCoord.getChunkX() * l1 + chunkCoord.getChunkZ() * l2 ^ resourcesSeed);
 
-        // Generate structures
-        boolean hasGeneratedAVillage = world.placeDefaultStructures(rand, chunkCoord);
+		// Generate structures
+		boolean hasGeneratedAVillage = world.placeDefaultStructures(rand, chunkCoord);
 
-        // Mark population started
-        world.startPopulation(chunkCoord);
-        TerrainControl.firePopulationStartEvent(world, rand, hasGeneratedAVillage, chunkCoord);
-        
-        // Complex surface blocks
-        placeComplexSurfaceBlocks(chunkCoord);
+		// Mark population started
+		world.startPopulation(chunkCoord);
+		TerrainControl.firePopulationStartEvent(world, rand, hasGeneratedAVillage, chunkCoord);
 
-        // Resource sequence
-        for (Resource res : biomeConfig.resourceSequence)
-        {
-            res.process(world, rand, hasGeneratedAVillage, chunkCoord);
-        }
+		// Complex surface blocks
+		placeComplexSurfaceBlocks(chunkCoord);
 
-        // Animals
-        world.placePopulationMobs(biome, rand, chunkCoord);
+		// Resource sequence
+		for (Resource res : biomeConfig.resourceSequence) {
+			res.process(world, rand, hasGeneratedAVillage, chunkCoord);
+		}
 
-        // Snow and ice
-        freezeChunk(chunkCoord);
+		// Animals
+		world.placePopulationMobs(biome, rand, chunkCoord);
 
-        // Replace blocks
-        world.replaceBlocks(chunkCoord);
+		// Snow and ice
+		freezeChunk(chunkCoord);
 
-        // Mark population ended
-        TerrainControl.firePopulationEndEvent(world, rand, hasGeneratedAVillage, chunkCoord);
-        world.endPopulation();
-    }
-    
-    protected void placeComplexSurfaceBlocks(ChunkCoordinate chunkCoord)
-    {
-        this.reusableChunkNoiseArray = this.noiseGen.a(this.reusableChunkNoiseArray, chunkCoord.getChunkX() * 16, chunkCoord.getChunkZ() * 16, 16, 16, 0.0625D, 0.0625D, 1.0D);
+		// Replace blocks
+		world.replaceBlocks(chunkCoord);
 
-        int x = chunkCoord.getBlockXCenter();
-        int z = chunkCoord.getBlockZCenter();
-        for (int i = 0; i < ChunkCoordinate.CHUNK_X_SIZE; i++)
-        {
-            for (int j = 0; j < ChunkCoordinate.CHUNK_Z_SIZE; j++)
-            {
-                int blockToReplaceX = x + i;
-                int blockToReplaceZ = z + j;
-                // Using the calculated biome id so that ReplaceToBiomeName can't mess up the ids
-                LocalBiome biome = this.world.getBiome(blockToReplaceX, blockToReplaceZ);
-                if (biome != null)
-                {
-                    double noise = this.reusableChunkNoiseArray[i + j * 16];
-                    BiomeConfig biomeConfig = biome.getBiomeConfig();
-                    biomeConfig.surfaceAndGroundControl.spawn(world, biomeConfig, noise, blockToReplaceX, blockToReplaceZ);
-                }
-            }
-        }
-    }
+		// Mark population ended
+		TerrainControl.firePopulationEndEvent(world, rand, hasGeneratedAVillage, chunkCoord);
+		world.endPopulation();
+	}
 
-    protected void freezeChunk(ChunkCoordinate chunkCoord)
-    {
-        LocalMaterialData snowMaterial = TerrainControl.toLocalMaterialData(DefaultMaterial.SNOW, 0);
-        int x = chunkCoord.getChunkX() * 16 + 8;
-        int z = chunkCoord.getChunkZ() * 16 + 8;
-        for (int i = 0; i < 16; i++)
-        {
-            for (int j = 0; j < 16; j++)
-            {
-                int blockToFreezeX = x + i;
-                int blockToFreezeZ = z + j;
-                freezeColumn(blockToFreezeX, blockToFreezeZ, snowMaterial);
-            }
-        }
-    }
+	protected void placeComplexSurfaceBlocks(ChunkCoordinate chunkCoord) {
+		this.reusableChunkNoiseArray = this.noiseGen.a(this.reusableChunkNoiseArray, chunkCoord.getChunkX() * 16,
+				chunkCoord.getChunkZ() * 16, 16, 16, 0.0625D, 0.0625D, 1.0D);
 
-    protected void freezeColumn(int x, int z, LocalMaterialData snowMaterial)
-    {
-        // Using the calculated biome id so that ReplaceToBiomeName can't mess up the ids
-        LocalBiome biome = world.getBiome(x, z);
-        if (biome != null)
-        {
-            BiomeConfig biomeConfig = biome.getBiomeConfig();
-            int blockToFreezeY = world.getHighestBlockYAt(x, z);
-            if (blockToFreezeY > 0 && biome.getTemperatureAt(x, blockToFreezeY, z) < WorldStandardValues.SNOW_AND_ICE_MAX_TEMP)
-            {
-                // Ice has to be placed one block in the world
-                if (world.getMaterial(x, blockToFreezeY - 1, z).isLiquid())
-                {
-                    world.setBlock(x, blockToFreezeY - 1, z, biomeConfig.iceBlock);
-                } else
-                {
-                    // Snow has to be placed on an empty space on a
-                    // block that accepts snow in the world
-                    if (world.isEmpty(x, blockToFreezeY, z))
-                    {
-                        if (world.getMaterial(x, blockToFreezeY - 1, z).canSnowFallOn())
-                        {
-                            world.setBlock(x, blockToFreezeY, z, snowMaterial);
-                        }
-                    }
-                }
-            }
-        }
-    }
+		int x = chunkCoord.getBlockXCenter();
+		int z = chunkCoord.getBlockZCenter();
+		for (int i = 0; i < ChunkCoordinate.CHUNK_X_SIZE; i++) {
+			for (int j = 0; j < ChunkCoordinate.CHUNK_Z_SIZE; j++) {
+				int blockToReplaceX = x + i;
+				int blockToReplaceZ = z + j;
+				// Using the calculated biome id so that ReplaceToBiomeName can't mess up the
+				// ids
+				LocalBiome biome = this.world.getBiome(blockToReplaceX, blockToReplaceZ);
+				if (biome != null) {
+					double noise = this.reusableChunkNoiseArray[i + j * 16];
+					BiomeConfig biomeConfig = biome.getBiomeConfig();
+					biomeConfig.surfaceAndGroundControl.spawn(world, biomeConfig, noise, blockToReplaceX, blockToReplaceZ);
+				}
+			}
+		}
+	}
+
+	protected void freezeChunk(ChunkCoordinate chunkCoord) {
+		LocalMaterialData snowMaterial = TerrainControl.toLocalMaterialData(DefaultMaterial.SNOW, 0);
+		int x = chunkCoord.getChunkX() * 16 + 8;
+		int z = chunkCoord.getChunkZ() * 16 + 8;
+		for (int i = 0; i < 16; i++) {
+			for (int j = 0; j < 16; j++) {
+				int blockToFreezeX = x + i;
+				int blockToFreezeZ = z + j;
+				freezeColumn(blockToFreezeX, blockToFreezeZ, snowMaterial);
+			}
+		}
+	}
+
+	protected void freezeColumn(int x, int z, LocalMaterialData snowMaterial) {
+		// Using the calculated biome id so that ReplaceToBiomeName can't mess up the
+		// ids
+		LocalBiome biome = world.getBiome(x, z);
+		if (biome != null) {
+			BiomeConfig biomeConfig = biome.getBiomeConfig();
+			int blockToFreezeY = world.getHighestBlockYAt(x, z);
+			if (blockToFreezeY > 0 && biome.getTemperatureAt(x, blockToFreezeY, z) < WorldStandardValues.SNOW_AND_ICE_MAX_TEMP) {
+				// Ice has to be placed one block in the world
+				if (world.getMaterial(x, blockToFreezeY - 1, z).isLiquid()) {
+					world.setBlock(x, blockToFreezeY - 1, z, biomeConfig.iceBlock);
+				}
+				else {
+					// Snow has to be placed on an empty space on a
+					// block that accepts snow in the world
+					if (world.isEmpty(x, blockToFreezeY, z)) {
+						if (world.getMaterial(x, blockToFreezeY - 1, z).canSnowFallOn()) {
+							world.setBlock(x, blockToFreezeY, z, snowMaterial);
+						}
+					}
+				}
+			}
+		}
+	}
 
 }

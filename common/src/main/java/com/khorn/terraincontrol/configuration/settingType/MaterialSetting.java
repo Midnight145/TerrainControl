@@ -11,26 +11,20 @@ import com.khorn.terraincontrol.util.minecraftTypes.DefaultMaterial;
  * {@link LocalMaterialData#toString()}.
  *
  */
-public class MaterialSetting extends Setting<LocalMaterialData>
-{
-    private final DefaultMaterial defaultValue;
+public class MaterialSetting extends Setting<LocalMaterialData> {
+	private final DefaultMaterial defaultValue;
 
-    public MaterialSetting(String name, DefaultMaterial defaultValue)
-    {
-        super(name);
-        this.defaultValue = defaultValue;
-    }
+	public MaterialSetting(String name, DefaultMaterial defaultValue) {
+		super(name);
+		this.defaultValue = defaultValue;
+	}
 
-    @Override
-    public LocalMaterialData getDefaultValue()
-    {
-        return TerrainControl.toLocalMaterialData(defaultValue, 0);
-    }
+	@Override
+	public LocalMaterialData getDefaultValue() { return TerrainControl.toLocalMaterialData(defaultValue, 0); }
 
-    @Override
-    public LocalMaterialData read(String string) throws InvalidConfigException
-    {
-        return TerrainControl.readMaterial(string);
-    }
+	@Override
+	public LocalMaterialData read(String string) throws InvalidConfigException {
+		return TerrainControl.readMaterial(string);
+	}
 
 }

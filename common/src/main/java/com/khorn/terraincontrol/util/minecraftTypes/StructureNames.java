@@ -9,15 +9,12 @@ package com.khorn.terraincontrol.util.minecraftTypes;
  * All names of replaced structures are simply "TC" + vanilla name.
  * 
  */
-public class StructureNames
-{
-    public static final String MINESHAFT = "Mineshaft";
-    public static final String NETHER_FORTRESS = "Fortress";
-    public static final String VILLAGE = "TCVillage";
-    public static final String STRONGHOLD = "Stronghold";
-    public static final String RARE_BUILDING = "TCTemple";
+public class StructureNames {
+	public static final String MINESHAFT = "Mineshaft";
+	public static final String NETHER_FORTRESS = "Fortress";
+	public static final String VILLAGE = "TCVillage";
+	public static final String STRONGHOLD = "Stronghold";
+	public static final String RARE_BUILDING = "TCTemple";
 
-    private StructureNames()
-    {
-    }
+	private StructureNames() {}
 }

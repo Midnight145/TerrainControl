@@ -14,26 +14,25 @@ import com.khorn.terraincontrol.configuration.BiomeConfig;
  * generation.
  * 
  */
-public interface SurfaceGenerator
-{
+public interface SurfaceGenerator {
 
-    /**
-     * Spawns this surface layer in the world.
-     * 
-     * @param world The world to spawn in.
-     * @param biomeConfig The biome config to use for the settings.
-     * @param noise The noise value, from -1 to 1.
-     * @param x X position in the world.
-     * @param z Z position in the world.
-     */
-    void spawn(LocalWorld world, BiomeConfig biomeConfig, double noise, int x, int z);
+	/**
+	 * Spawns this surface layer in the world.
+	 * 
+	 * @param world       The world to spawn in.
+	 * @param biomeConfig The biome config to use for the settings.
+	 * @param noise       The noise value, from -1 to 1.
+	 * @param x           X position in the world.
+	 * @param z           Z position in the world.
+	 */
+	void spawn(LocalWorld world, BiomeConfig biomeConfig, double noise, int x, int z);
 
-    /**
-     * Writes the settings used to a string. There must be a constructor to
-     * read this string again.
-     * 
-     * @return The settings as a string.
-     */
-    String toString();
+	/**
+	 * Writes the settings used to a string. There must be a constructor to
+	 * read this string again.
+	 * 
+	 * @return The settings as a string.
+	 */
+	String toString();
 
 }
