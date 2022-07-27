@@ -49,6 +49,8 @@ platforms/forge**/*.mca
 platforms/forge**/*.json
 platforms/forge/run
 
+/libs
+
 # Filesystem dust
 Thumbs.db
 .DS_Store
