@@ -28,7 +28,7 @@ archivesBaseName = "terraincontrol-forge"
 description = "TerrainControl for Minecraft Forge"
 ext.ideProjectName = "TerrainControl-Forge"
 ext.forgeVersion = "1.7.10-10.13.0.1160"
-minecraft.version = ext.forgeVersion
+minecraft.version = "1.7.10-10.13.0.1160"
 
 repositories
 {

@@ -38,7 +38,9 @@ public enum MobNames
     WITCH("Witch", "witch"),
     WITHER("WitherBoss", "witherboss", "wither_boss", "Wither", "wither"),
     WOLF("Wolf", "wolf"),
-    ZOMBIE("Zombie", "zombie");
+    ZOMBIE("Zombie", "zombie"),
+	PECH("Thaumcraft.Pech", "Pech"),
+	WISP("Thaumcraft.Wisp", "Wisp");
 
     // Contains all aliases (alias, internalName)
     private static Map<String, String> mobAliases = new HashMap<String, String>();
