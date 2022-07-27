@@ -17,122 +17,101 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class StrongholdGen extends MapGenStructure
-{
-    private List<BiomeGenBase> allowedBiomeGenBases;
+public class StrongholdGen extends MapGenStructure {
+	private List<BiomeGenBase> allowedBiomeGenBases;
 
-    private boolean ranBiomeCheck;
-    private ChunkCoordIntPair[] structureCoords;
-    private double distance;
-    private int spread;
+	private boolean ranBiomeCheck;
+	private ChunkCoordIntPair[] structureCoords;
+	private double distance;
+	private int spread;
 
-    public StrongholdGen(WorldSettings configs)
-    {
-        this.distance = configs.worldConfig.strongholdDistance;
-        this.structureCoords = new ChunkCoordIntPair[configs.worldConfig.strongholdCount];
-        this.spread = configs.worldConfig.strongholdSpread;
+	public StrongholdGen(WorldSettings configs) {
+		this.distance = configs.worldConfig.strongholdDistance;
+		this.structureCoords = new ChunkCoordIntPair[configs.worldConfig.strongholdCount];
+		this.spread = configs.worldConfig.strongholdSpread;
 
-        allowedBiomeGenBases = new ArrayList<BiomeGenBase>();
+		allowedBiomeGenBases = new ArrayList<BiomeGenBase>();
 
-        for (LocalBiome biome : configs.biomes)
-        {
-            if (biome == null)
-                continue;
-            if (biome.getBiomeConfig().strongholdsEnabled)
-            {
-                allowedBiomeGenBases.add(((ForgeBiome) biome).getHandle());
-            }
-        }
-    }
+		for (LocalBiome biome : configs.biomes) {
+			if (biome == null)
+				continue;
+			if (biome.getBiomeConfig().strongholdsEnabled) { allowedBiomeGenBases.add(((ForgeBiome) biome).getHandle()); }
+		}
+	}
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    @Override
-    protected boolean canSpawnStructureAtCoords(int par1, int par2)
-    {
-        if (!this.ranBiomeCheck)
-        {
-            Random random = new Random();
-            random.setSeed(this.worldObj.getSeed());
-            double randomNumBetween0and2PI = random.nextDouble() * Math.PI * 2.0D;
-            int var6 = 1;
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	protected boolean canSpawnStructureAtCoords(int par1, int par2) {
+		if (!this.ranBiomeCheck) {
+			Random random = new Random();
+			random.setSeed(this.worldObj.getSeed());
+			double randomNumBetween0and2PI = random.nextDouble() * Math.PI * 2.0D;
+			int var6 = 1;
 
-            for (int i = 0; i < this.structureCoords.length; ++i)
-            {
-                double var8 = (1.25D * (double) var6 + random.nextDouble()) * this.distance * (double) var6;
-                int var10 = (int) Math.round(Math.cos(randomNumBetween0and2PI) * var8);
-                int var11 = (int) Math.round(Math.sin(randomNumBetween0and2PI) * var8);
-                ArrayList var12 = new ArrayList();
-                Collections.addAll(var12, this.allowedBiomeGenBases);
-                ChunkPosition var13 = this.worldObj.getWorldChunkManager().findBiomePosition((var10 << 4) + 8, (var11 << 4) + 8, 112, var12, random);
+			for (int i = 0; i < this.structureCoords.length; ++i) {
+				double var8 = (1.25D * (double) var6 + random.nextDouble()) * this.distance * (double) var6;
+				int var10 = (int) Math.round(Math.cos(randomNumBetween0and2PI) * var8);
+				int var11 = (int) Math.round(Math.sin(randomNumBetween0and2PI) * var8);
+				ArrayList var12 = new ArrayList();
+				Collections.addAll(var12, this.allowedBiomeGenBases);
+				ChunkPosition var13 = this.worldObj.getWorldChunkManager().findBiomePosition((var10 << 4) + 8, (var11 << 4) + 8, 112, var12,
+						random);
 
-                if (var13 != null)
-                {
-                    var10 = var13.chunkPosX >> 4;
-                    var11 = var13.chunkPosZ >> 4;
-                }
+				if (var13 != null) {
+					var10 = var13.chunkPosX >> 4;
+					var11 = var13.chunkPosZ >> 4;
+				}
 
-                this.structureCoords[i] = new ChunkCoordIntPair(var10, var11);
-                randomNumBetween0and2PI += (Math.PI * 2D) * (double) var6 / (double) this.spread;
+				this.structureCoords[i] = new ChunkCoordIntPair(var10, var11);
+				randomNumBetween0and2PI += (Math.PI * 2D) * (double) var6 / (double) this.spread;
 
-                if (i == this.spread)
-                {
-                    var6 += 2 + random.nextInt(5);
-                    this.spread += 1 + random.nextInt(2);
-                }
-            }
+				if (i == this.spread) {
+					var6 += 2 + random.nextInt(5);
+					this.spread += 1 + random.nextInt(2);
+				}
+			}
 
-            this.ranBiomeCheck = true;
-        }
+			this.ranBiomeCheck = true;
+		}
 
-        ChunkCoordIntPair[] structureCoordsLocal = this.structureCoords;
+		ChunkCoordIntPair[] structureCoordsLocal = this.structureCoords;
 
-        for (ChunkCoordIntPair structureCoord : structureCoordsLocal)
-        {
-            if (par1 == structureCoord.chunkXPos && par2 == structureCoord.chunkZPos)
-            {
-                return true;
-            }
-        }
+		for (ChunkCoordIntPair structureCoord : structureCoordsLocal) {
+			if (par1 == structureCoord.chunkXPos && par2 == structureCoord.chunkZPos) { return true; }
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    /**
-     * Returns a list of other locations at which the structure generation has
-     * been run, or null if not relevant to this structure generator.
-     */
-    @Override
-    protected List<ChunkPosition> getCoordList()
-    {       
-        ArrayList<ChunkPosition> chunkPositions = new ArrayList<ChunkPosition>();
+	/**
+	 * Returns a list of other locations at which the structure generation has
+	 * been run, or null if not relevant to this structure generator.
+	 */
+	@Override
+	protected List<ChunkPosition> getCoordList() {
+		ArrayList<ChunkPosition> chunkPositions = new ArrayList<ChunkPosition>();
 
-        for (ChunkCoordIntPair structureCoord : structureCoords)
-        {
-            if (structureCoord != null)
-            {
-                chunkPositions.add(structureCoord.func_151349_a(64));
-            }
-        }
+		for (ChunkCoordIntPair structureCoord : structureCoords) {
+			if (structureCoord != null) { chunkPositions.add(structureCoord.func_151349_a(64)); }
+		}
 
-        return chunkPositions;
-    }
+		return chunkPositions;
+	}
 
-    @Override
-    protected StructureStart getStructureStart(int par1, int par2)
-    {
-        MapGenStronghold.Start start = new MapGenStronghold.Start(this.worldObj, this.rand, par1, par2);
+	@Override
+	protected StructureStart getStructureStart(int par1, int par2) {
+		MapGenStronghold.Start start = new MapGenStronghold.Start(this.worldObj, this.rand, par1, par2);
 
-        while (start.getComponents().isEmpty() || ((StructureStrongholdPieces.Stairs2) start.getComponents().get(0)).strongholdPortalRoom == null)
-        {
-            start = new MapGenStronghold.Start(this.worldObj, this.rand, par1, par2);
-        }
+		while (start.getComponents().isEmpty()
+				|| ((StructureStrongholdPieces.Stairs2) start.getComponents().get(0)).strongholdPortalRoom == null) {
+			start = new MapGenStronghold.Start(this.worldObj, this.rand, par1, par2);
+		}
 
-        return start;
-    }
+		return start;
+	}
 
-    @Override
-    public String func_143025_a()
-    {
-        return StructureNames.STRONGHOLD;
-    }
+	@Override
+	public String func_143025_a() {
+		return StructureNames.STRONGHOLD;
+	}
 }

@@ -15,80 +15,66 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class SpawnCommand extends BaseCommand
-{
-    public SpawnCommand(TCPlugin _plugin)
-    {
-        super(_plugin);
-        name = "spawn";
-        perm = TCPerm.CMD_SPAWN.node;
-        usage = "spawn Name [World]";
-        workOnConsole = false;
-    }
+public class SpawnCommand extends BaseCommand {
+	public SpawnCommand(TCPlugin _plugin) {
+		super(_plugin);
+		name = "spawn";
+		perm = TCPerm.CMD_SPAWN.node;
+		usage = "spawn Name [World]";
+		workOnConsole = false;
+	}
 
-    @Override
-    public boolean onCommand(CommandSender sender, List<String> args)
-    {
-        Player me = (Player) sender;
-        Random random = new Random();
+	@Override
+	public boolean onCommand(CommandSender sender, List<String> args) {
+		Player me = (Player) sender;
+		Random random = new Random();
 
-        LocalWorld bukkitWorld = this.getWorld(me, args.size() > 1 ? args.get(1) : "");
+		LocalWorld bukkitWorld = this.getWorld(me, args.size() > 1 ? args.get(1) : "");
 
-        if (args.isEmpty())
-        {
-            me.sendMessage(ERROR_COLOR + "You must enter the name of the BO2.");
-            return true;
-        }
-        CustomObject spawnObject = null;
+		if (args.isEmpty()) {
+			me.sendMessage(ERROR_COLOR + "You must enter the name of the BO2.");
+			return true;
+		}
+		CustomObject spawnObject = null;
 
-        if (bukkitWorld != null)
-            spawnObject = bukkitWorld.getConfigs().getCustomObjects().parseCustomObject(args.get(0));
+		if (bukkitWorld != null)
+			spawnObject = bukkitWorld.getConfigs().getCustomObjects().parseCustomObject(args.get(0));
 
-        if (spawnObject == null)
-        {
-            sender.sendMessage(ERROR_COLOR + "Object not found, use '/tc list' to list the available ones.");
-            return true;
-        }
+		if (spawnObject == null) {
+			sender.sendMessage(ERROR_COLOR + "Object not found, use '/tc list' to list the available ones.");
+			return true;
+		}
 
-        Block block = this.getWatchedBlock(me, true);
-        if (block == null)
-            return true;
-        
-        if (spawnObject.spawnForced(bukkitWorld, random, Rotation.NORTH, block.getX(), block.getY(), block.getZ()))
-        {
-            me.sendMessage(BaseCommand.MESSAGE_COLOR + spawnObject.getName() + " was spawned.");
-        } else
-        {
-            me.sendMessage(BaseCommand.ERROR_COLOR + "Object can't be spawned over there.");
-        }
+		Block block = this.getWatchedBlock(me, true);
+		if (block == null)
+			return true;
 
-        return true;
-    }
+		if (spawnObject.spawnForced(bukkitWorld, random, Rotation.NORTH, block.getX(), block.getY(), block.getZ())) {
+			me.sendMessage(BaseCommand.MESSAGE_COLOR + spawnObject.getName() + " was spawned.");
+		}
+		else {
+			me.sendMessage(BaseCommand.ERROR_COLOR + "Object can't be spawned over there.");
+		}
 
-    public Block getWatchedBlock(Player me, boolean verbose)
-    {
-        if (me == null)
-            return null;
+		return true;
+	}
 
-        Block block;
-        Block previousBlock = null;
+	public Block getWatchedBlock(Player me, boolean verbose) {
+		if (me == null)
+			return null;
 
-        Iterator<Block> itr = new BlockIterator(me, 200);
-        while (itr.hasNext())
-        {
-            block = itr.next();
-            if (block.getType() != Material.AIR && block.getType() != Material.LONG_GRASS)
-            {
-                return previousBlock;
-            }
-            previousBlock = block;
-        }
+		Block block;
+		Block previousBlock = null;
 
-        if (verbose)
-        {
-            me.sendMessage(ERROR_COLOR + "No block in sight.");
-        }
+		Iterator<Block> itr = new BlockIterator(me, 200);
+		while (itr.hasNext()) {
+			block = itr.next();
+			if (block.getType() != Material.AIR && block.getType() != Material.LONG_GRASS) { return previousBlock; }
+			previousBlock = block;
+		}
 
-        return null;
-    }
+		if (verbose) { me.sendMessage(ERROR_COLOR + "No block in sight."); }
+
+		return null;
+	}
 }

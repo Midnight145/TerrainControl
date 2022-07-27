@@ -17,131 +17,115 @@ import java.util.Random;
  * BiomeGenerator. This class provides a bridge between the two, allowing us to
  * use custom biome generators.
  */
-public class TCWorldChunkManager extends WorldChunkManager
-{
-    private BukkitWorld localWorld;
-    private BiomeGenerator biomeGenerator;
+public class TCWorldChunkManager extends WorldChunkManager {
+	private BukkitWorld localWorld;
+	private BiomeGenerator biomeGenerator;
 
-    public TCWorldChunkManager(BukkitWorld world, BiomeGenerator biomeGenerator)
-    {
-        this.localWorld = world;
-        this.biomeGenerator = biomeGenerator;
-    }
+	public TCWorldChunkManager(BukkitWorld world, BiomeGenerator biomeGenerator) {
+		this.localWorld = world;
+		this.biomeGenerator = biomeGenerator;
+	}
 
-    @Override
-    public BiomeBase getBiome(int paramInt1, int paramInt2)
-    {
-        return localWorld.getBiomeById(biomeGenerator.getBiome(paramInt1, paramInt2)).getHandle();
-    }
+	@Override
+	public BiomeBase getBiome(int paramInt1, int paramInt2) {
+		return localWorld.getBiomeById(biomeGenerator.getBiome(paramInt1, paramInt2)).getHandle();
+	}
 
-    @Override
-    public float[] getWetness(float[] paramArrayOfFloat, int paramInt1, int paramInt2, int paramInt3, int paramInt4)
-    {
-        return biomeGenerator.getRainfall(paramArrayOfFloat, paramInt1, paramInt2, paramInt3, paramInt4);
-    }
+	@Override
+	public float[] getWetness(float[] paramArrayOfFloat, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+		return biomeGenerator.getRainfall(paramArrayOfFloat, paramInt1, paramInt2, paramInt3, paramInt4);
+	}
 
-    @Override
-    public BiomeBase[] getBiomes(BiomeBase[] paramArrayOfBiomeBase, int paramInt1, int paramInt2, int paramInt3, int paramInt4)
-    {
-        if ((paramArrayOfBiomeBase == null) || (paramArrayOfBiomeBase.length < paramInt3 * paramInt4))
-        {
-            paramArrayOfBiomeBase = new BiomeBase[paramInt3 * paramInt4];
-        }
+	@Override
+	public BiomeBase[] getBiomes(BiomeBase[] paramArrayOfBiomeBase, int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+		if ((paramArrayOfBiomeBase == null) || (paramArrayOfBiomeBase.length < paramInt3 * paramInt4)) {
+			paramArrayOfBiomeBase = new BiomeBase[paramInt3 * paramInt4];
+		}
 
-        int[] arrayOfInt = this.biomeGenerator.getBiomesUnZoomed(null, paramInt1, paramInt2, paramInt3, paramInt4, OutputType.DEFAULT_FOR_WORLD);
+		int[] arrayOfInt = this.biomeGenerator.getBiomesUnZoomed(null, paramInt1, paramInt2, paramInt3, paramInt4,
+				OutputType.DEFAULT_FOR_WORLD);
 
-        // Replaces ids with BiomeBases
-        for (int i = 0; i < paramInt3 * paramInt4; i++)
-        {
-            paramArrayOfBiomeBase[i] = localWorld.getBiomeById(arrayOfInt[i]).getHandle();
-        }
+		// Replaces ids with BiomeBases
+		for (int i = 0; i < paramInt3 * paramInt4; i++) {
+			paramArrayOfBiomeBase[i] = localWorld.getBiomeById(arrayOfInt[i]).getHandle();
+		}
 
-        return paramArrayOfBiomeBase;
-    }
+		return paramArrayOfBiomeBase;
+	}
 
-    @Override
-    public BiomeBase[] a(BiomeBase[] paramArrayOfBiomeBase, int paramInt1, int paramInt2, int paramInt3, int paramInt4, boolean paramBoolean)
-    {
-        if ((paramArrayOfBiomeBase == null) || (paramArrayOfBiomeBase.length < paramInt3 * paramInt4))
-        {
-            paramArrayOfBiomeBase = new BiomeBase[paramInt3 * paramInt4];
-        }
+	@Override
+	public BiomeBase[] a(BiomeBase[] paramArrayOfBiomeBase, int paramInt1, int paramInt2, int paramInt3, int paramInt4,
+			boolean paramBoolean) {
+		if ((paramArrayOfBiomeBase == null) || (paramArrayOfBiomeBase.length < paramInt3 * paramInt4)) {
+			paramArrayOfBiomeBase = new BiomeBase[paramInt3 * paramInt4];
+		}
 
-        int[] localObject = this.biomeGenerator.getBiomes(null, paramInt1, paramInt2, paramInt3, paramInt4, OutputType.DEFAULT_FOR_WORLD);
+		int[] localObject = this.biomeGenerator.getBiomes(null, paramInt1, paramInt2, paramInt3, paramInt4, OutputType.DEFAULT_FOR_WORLD);
 
-        // Replace ids with BiomeBases
-        for (int i = 0; i < paramInt3 * paramInt4; i++)
-        {
-            paramArrayOfBiomeBase[i] = localWorld.getBiomeById(localObject[i]).getHandle();
-        }
+		// Replace ids with BiomeBases
+		for (int i = 0; i < paramInt3 * paramInt4; i++) {
+			paramArrayOfBiomeBase[i] = localWorld.getBiomeById(localObject[i]).getHandle();
+		}
 
-        return paramArrayOfBiomeBase;
-    }
+		return paramArrayOfBiomeBase;
+	}
 
-    @SuppressWarnings("rawtypes")
-    @Override
-    // areBiomesViable
-    public boolean a(int paramInt1, int paramInt2, int paramInt3, List paramList)
-    {
-        // Hack for villages in other biomes
-        // (The alternative would be to completely override the village spawn
-        // code)
-        if (paramList == WorldGenVillage.e && localWorld.villageGen != null)
-        {
-            paramList = localWorld.villageGen.villageSpawnBiomes;
-        }
+	@SuppressWarnings("rawtypes")
+	@Override
+	// areBiomesViable
+	public boolean a(int paramInt1, int paramInt2, int paramInt3, List paramList) {
+		// Hack for villages in other biomes
+		// (The alternative would be to completely override the village spawn
+		// code)
+		if (paramList == WorldGenVillage.e && localWorld.villageGen != null) { paramList = localWorld.villageGen.villageSpawnBiomes; }
 
-        int i = paramInt1 - paramInt3 >> 2;
-        int j = paramInt2 - paramInt3 >> 2;
-        int k = paramInt1 + paramInt3 >> 2;
-        int m = paramInt2 + paramInt3 >> 2;
+		int i = paramInt1 - paramInt3 >> 2;
+		int j = paramInt2 - paramInt3 >> 2;
+		int k = paramInt1 + paramInt3 >> 2;
+		int m = paramInt2 + paramInt3 >> 2;
 
-        int n = k - i + 1;
-        int i1 = m - j + 1;
-        BiomeBase[] arrayOfInt = this.getBiomes(null, i, j, n, i1);
-        for (int i2 = 0; i2 < n * i1; i2++)
-        {
-            BiomeBase localBiomeBase = arrayOfInt[i2];
-            if (!paramList.contains(localBiomeBase))
-                return false;
-        }
+		int n = k - i + 1;
+		int i1 = m - j + 1;
+		BiomeBase[] arrayOfInt = this.getBiomes(null, i, j, n, i1);
+		for (int i2 = 0; i2 < n * i1; i2++) {
+			BiomeBase localBiomeBase = arrayOfInt[i2];
+			if (!paramList.contains(localBiomeBase))
+				return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    @SuppressWarnings("rawtypes")
-    public ChunkPosition a(int paramInt1, int paramInt2, int paramInt3, List paramList, Random paramRandom)
-    {
-        int i = paramInt1 - paramInt3 >> 2;
-        int j = paramInt2 - paramInt3 >> 2;
-        int k = paramInt1 + paramInt3 >> 2;
-        int m = paramInt2 + paramInt3 >> 2;
+	@Override
+	@SuppressWarnings("rawtypes")
+	public ChunkPosition a(int paramInt1, int paramInt2, int paramInt3, List paramList, Random paramRandom) {
+		int i = paramInt1 - paramInt3 >> 2;
+		int j = paramInt2 - paramInt3 >> 2;
+		int k = paramInt1 + paramInt3 >> 2;
+		int m = paramInt2 + paramInt3 >> 2;
 
-        int n = k - i + 1;
-        int i1 = m - j + 1;
-        int[] arrayOfInt = this.biomeGenerator.getBiomesUnZoomed(null, i, j, n, i1, OutputType.DEFAULT_FOR_WORLD);
-        ChunkPosition localChunkPosition = null;
-        int i2 = 0;
-        for (int i3 = 0; i3 < arrayOfInt.length; i3++)
-        {
-            if (arrayOfInt[i3] >= DefaultBiome.values().length)
-                continue;
-            int i4 = i + i3 % n << 2;
-            int i5 = j + i3 / n << 2;
-            BiomeBase localBiomeBase = BiomeBase.getBiome(arrayOfInt[i3]);
-            if ((!paramList.contains(localBiomeBase)) || ((localChunkPosition != null) && (paramRandom.nextInt(i2 + 1) != 0)))
-                continue;
-            localChunkPosition = new ChunkPosition(i4, 0, i5);
-            i2++;
-        }
+		int n = k - i + 1;
+		int i1 = m - j + 1;
+		int[] arrayOfInt = this.biomeGenerator.getBiomesUnZoomed(null, i, j, n, i1, OutputType.DEFAULT_FOR_WORLD);
+		ChunkPosition localChunkPosition = null;
+		int i2 = 0;
+		for (int i3 = 0; i3 < arrayOfInt.length; i3++) {
+			if (arrayOfInt[i3] >= DefaultBiome.values().length)
+				continue;
+			int i4 = i + i3 % n << 2;
+			int i5 = j + i3 / n << 2;
+			BiomeBase localBiomeBase = BiomeBase.getBiome(arrayOfInt[i3]);
+			if ((!paramList.contains(localBiomeBase)) || ((localChunkPosition != null) && (paramRandom.nextInt(i2 + 1) != 0)))
+				continue;
+			localChunkPosition = new ChunkPosition(i4, 0, i5);
+			i2++;
+		}
 
-        return localChunkPosition;
-    }
+		return localChunkPosition;
+	}
 
-    @Override
-    public void b()
-    {
-        this.biomeGenerator.cleanupCache();
-    }
+	@Override
+	public void b() {
+		this.biomeGenerator.cleanupCache();
+	}
 }

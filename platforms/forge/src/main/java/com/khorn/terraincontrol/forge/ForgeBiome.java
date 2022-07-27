@@ -6,91 +6,67 @@ import com.khorn.terraincontrol.configuration.BiomeConfig;
 import com.khorn.terraincontrol.forge.generator.BiomeGenCustom;
 import net.minecraft.world.biome.BiomeGenBase;
 
-public class ForgeBiome implements LocalBiome
-{
-    private final BiomeGenCustom biomeBase;
-    private final BiomeIds biomeIds;
-    private final BiomeConfig biomeConfig;
+public class ForgeBiome implements LocalBiome {
+	private final BiomeGenCustom biomeBase;
+	private final BiomeIds biomeIds;
+	private final BiomeConfig biomeConfig;
 
-    /**
-     * Creates a new biome with the given name and id. Also registers it in
-     * Minecraft's biome array, but only when the biome is not virtual.
-     * 
-     * @param biomeConfig The config of the biome.
-     * @param biomeIds    The ids of the biome.
-     * @return The registered biome.
-     */
-    public static ForgeBiome createBiome(BiomeConfig biomeConfig, BiomeIds biomeIds)
-    {
-        // Store the previous biome in a variable
-        BiomeGenBase previousBiome = BiomeGenBase.getBiome(biomeIds.getSavedId());
+	/**
+	 * Creates a new biome with the given name and id. Also registers it in
+	 * Minecraft's biome array, but only when the biome is not virtual.
+	 * 
+	 * @param biomeConfig The config of the biome.
+	 * @param biomeIds    The ids of the biome.
+	 * @return The registered biome.
+	 */
+	public static ForgeBiome createBiome(BiomeConfig biomeConfig, BiomeIds biomeIds) {
+		// Store the previous biome in a variable
+		BiomeGenBase previousBiome = BiomeGenBase.getBiome(biomeIds.getSavedId());
 
-        BiomeGenCustom custom = new BiomeGenCustom(biomeConfig.getName(), biomeIds);
-        custom.color = biomeConfig.biomeColor;
-        
-        // Register new biome
-        ForgeBiome biome = new ForgeBiome(biomeConfig, custom);
+		BiomeGenCustom custom = new BiomeGenCustom(biomeConfig.getName(), biomeIds);
+		custom.color = biomeConfig.biomeColor;
 
-        // Restore settings of the previous biome
-        if (previousBiome != null)
-        {
-            biome.biomeBase.copyBiome(previousBiome);
-        }
+		// Register new biome
+		ForgeBiome biome = new ForgeBiome(biomeConfig, custom);
 
-        return biome;
-    }
+		// Restore settings of the previous biome
+		if (previousBiome != null) { biome.biomeBase.copyBiome(previousBiome); }
 
-    private ForgeBiome(BiomeConfig biomeConfig, BiomeGenCustom biome)
-    {
-        this.biomeBase = biome;
-        this.biomeIds = new BiomeIds(biome.generationId, biome.biomeID);
-        this.biomeConfig = biomeConfig;
-    }
+		return biome;
+	}
 
-    @Override
-    public boolean isCustom()
-    {
-        return true;
-    }
+	private ForgeBiome(BiomeConfig biomeConfig, BiomeGenCustom biome) {
+		this.biomeBase = biome;
+		this.biomeIds = new BiomeIds(biome.generationId, biome.biomeID);
+		this.biomeConfig = biomeConfig;
+	}
 
-    @Override
-    public void setEffects()
-    {
-        biomeBase.setEffects(biomeConfig);
-    }
+	@Override
+	public boolean isCustom() { return true; }
 
-    @Override
-    public String getName()
-    {
-        return biomeBase.biomeName;
-    }
+	@Override
+	public void setEffects() {
+		biomeBase.setEffects(biomeConfig);
+	}
 
-    public BiomeGenCustom getHandle()
-    {
-        return biomeBase;
-    }
+	@Override
+	public String getName() { return biomeBase.biomeName; }
 
-    @Override
-    public BiomeIds getIds()
-    {
-        return biomeIds;
-    }
+	public BiomeGenCustom getHandle() { return biomeBase; }
 
-    @Override
-    public float getTemperatureAt(int x, int y, int z)
-    {
-        return biomeBase.getFloatTemperature(x, y, z);
-    }
+	@Override
+	public BiomeIds getIds() { return biomeIds; }
 
-    @Override
-    public BiomeConfig getBiomeConfig()
-    {
-        return biomeConfig;
-    }
-    
-    @Override
-    public String toString()
-    {
-        return getName() + "[" + biomeIds + "]";
-    }
+	@Override
+	public float getTemperatureAt(int x, int y, int z) {
+		return biomeBase.getFloatTemperature(x, y, z);
+	}
+
+	@Override
+	public BiomeConfig getBiomeConfig() { return biomeConfig; }
+
+	@Override
+	public String toString() {
+		return getName() + "[" + biomeIds + "]";
+	}
 }
