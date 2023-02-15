@@ -8,6 +8,7 @@ import com.khorn.terraincontrol.configuration.WeightedMobSpawnGroup;
 import com.khorn.terraincontrol.forge.util.MobSpawnGroupHelper;
 
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.biome.BiomeGenBase;
 
@@ -34,14 +35,16 @@ public class BiomeGenCustom extends BiomeGenBase {
 
 	/**
 	 * Needs a BiomeConfig that has all the visual settings present.
-	 * 
+	 *
 	 * @param config
 	 */
 	@SuppressWarnings("unchecked")
 	public void setEffects(BiomeConfig config) {
 		this.temperature = config.biomeTemperature;
 		this.rainfall = config.biomeWetness;
-		if (this.rainfall == 0) { this.setDisableRain(); }
+		if (this.rainfall == 0) {
+			this.setDisableRain();
+		}
 		this.waterColorMultiplier = config.waterColor;
 		this.skyColor = config.skyColor;
 		this.grassColor = config.grassColor;
@@ -49,15 +52,25 @@ public class BiomeGenCustom extends BiomeGenBase {
 		this.foliageColor = config.foliageColor;
 		this.foliageColorIsMultiplier = config.foliageColorIsMultiplier;
 
-		if (this.grassColor != 0xffffff) { this.grassColorSet = true; }
+		if (this.grassColor != 0xffffff) {
+			this.grassColorSet = true;
+		}
 
-		if (this.foliageColor != 0xffffff) { this.foliageColorSet = true; }
+		if (this.foliageColor != 0xffffff) {
+			this.foliageColorSet = true;
+		}
 
 		// Mob spawning
 		this.addMobs(this.spawnableMonsterList, config.spawnMonsters);
 		this.addMobs(this.spawnableCreatureList, config.spawnCreatures);
 		this.addMobs(this.spawnableWaterCreatureList, config.spawnWaterCreatures);
 		this.addMobs(this.spawnableCaveCreatureList, config.spawnAmbientCreatures);
+		System.out.println("config.getName():" + config.getName());
+		
+		if (config.getName() == "Hell") {
+			final SpawnListEntry blazeEntry = new SpawnListEntry(EntityBlaze.class, 4, 2, 6);
+			this.spawnableMonsterList.add(blazeEntry);
+		}
 
 		// color ?
 		// this.x = 522674;
@@ -96,24 +109,22 @@ public class BiomeGenCustom extends BiomeGenBase {
 		this.spawnableCreatureList = baseBiome.getSpawnableList(EnumCreatureType.creature);
 		this.spawnableWaterCreatureList = baseBiome.getSpawnableList(EnumCreatureType.waterCreature);
 		this.spawnableCaveCreatureList = baseBiome.getSpawnableList(EnumCreatureType.ambient);
+		
 	}
 
 	// Sky color from Temp
 	@Override
-	public int getSkyColorByTemp(float v) {
-		return this.skyColor;
-	}
+	public int getSkyColorByTemp(float v) { return this.skyColor; }
 
 	// getGrassColorAtCoords
 	@Override
 	public int getModdedBiomeGrassColor(int original) {
 		if (!this.grassColorSet) { return original; }
 		if (this.grassColorIsMultiplier) {
-			return ((ColorizerFoliage.getFoliageColor(Math.min(this.temperature, 1.0f), this.rainfall) & 0xFEFEFE) + this.grassColor) / 2;
+			return ((ColorizerFoliage.getFoliageColor(Math.min(this.temperature, 1.0f), this.rainfall) & 0xFEFEFE)
+					+ this.grassColor) / 2;
 		}
-		else {
-			return this.grassColor;
-		}
+		return this.grassColor;
 
 	}
 
@@ -122,16 +133,13 @@ public class BiomeGenCustom extends BiomeGenBase {
 	public int getModdedBiomeFoliageColor(int original) {
 		if (!this.foliageColorSet) { return original; }
 		if (this.foliageColorIsMultiplier) {
-			return ((ColorizerFoliage.getFoliageColor(Math.min(this.temperature, 1.0f), this.rainfall) & 0xFEFEFE) + this.foliageColor) / 2;
+			return ((ColorizerFoliage.getFoliageColor(Math.min(this.temperature, 1.0f), this.rainfall) & 0xFEFEFE)
+					+ this.foliageColor) / 2;
 		}
-		else {
-			return this.foliageColor;
-		}
+		return this.foliageColor;
 	}
 
 	@Override
-	public String toString() {
-		return "BiomeGenCustom of " + this.biomeName;
-	}
+	public String toString() { return "BiomeGenCustom of " + this.biomeName; }
 
 }
