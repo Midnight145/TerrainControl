@@ -5,7 +5,7 @@ defaultTasks 'removeOldReleases', 'build', 'createReleaseJar', 'install'
 
 allprojects
 {
-    version = "2.7.0-colored-lockhack-spawnfix"
+    version = "2.8.0-colored-lockhack-spawnfix"
     group = "com.khorn.terraincontrol"
 
     // Give this a value in a child project to change the name in your IDE
