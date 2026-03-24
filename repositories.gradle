@@ -1,0 +1,2 @@
+// Additional repositories beyond what the convention plugin provides.
+// includeWellKnownRepositories = true handles GTNH Maven and standard repos.
