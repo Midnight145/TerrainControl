@@ -17,14 +17,14 @@ public class VillageGen extends MapGenStructure {
 	/**
 	 * A list of all the biomes villages can spawn in.
 	 */
-	public List<BiomeGenBase> villageSpawnBiomes;
+	public final List<BiomeGenBase> villageSpawnBiomes;
 
 	/**
 	 * Village size, 0 for normal, 1 for flat map
 	 */
-	private int size;
-	private int distance;
-	private int minimumDistance;
+	private final int size;
+	private final int distance;
+	private final int minimumDistance;
 
 	public VillageGen(WorldSettings configs) {
 		size = configs.worldConfig.villageSize;
@@ -32,7 +32,7 @@ public class VillageGen extends MapGenStructure {
 		minimumDistance = 8;
 
 		// Add all village biomes to the list
-		villageSpawnBiomes = new ArrayList<BiomeGenBase>();
+		villageSpawnBiomes = new ArrayList<>();
 		for (LocalBiome biome : configs.biomes) {
 			if (biome == null)
 				continue;

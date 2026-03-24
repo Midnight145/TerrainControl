@@ -1,10 +1,11 @@
 package com.khorn.terraincontrol.generator.noise;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class NoiseGeneratorOldOctaves {
-	private NoiseGeneratorOld[] a;
-	private int b;
+	private final NoiseGeneratorOld[] a;
+	private final int b;
 
 	public NoiseGeneratorOldOctaves(Random paramRandom, int paramInt) {
 		this.b = paramInt;
@@ -26,9 +27,7 @@ public class NoiseGeneratorOldOctaves {
 		if ((paramArrayOfDouble == null) || (paramArrayOfDouble.length < paramInt1 * paramInt2))
 			paramArrayOfDouble = new double[paramInt1 * paramInt2];
 		else {
-			for (int i = 0; i < paramArrayOfDouble.length; i++) {
-				paramArrayOfDouble[i] = 0.0D;
-			}
+			Arrays.fill(paramArrayOfDouble, 0.0D);
 		}
 		double d1 = 1.0D;
 		double d2 = 1.0D;

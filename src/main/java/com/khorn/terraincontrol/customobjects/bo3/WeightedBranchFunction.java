@@ -21,7 +21,7 @@ public class WeightedBranchFunction extends BranchFunction implements Branch {
 
 	@Override
 	public void load(List<String> args) throws InvalidConfigException {
-		branches = new TreeSet<BranchNode>();
+		branches = new TreeSet<>();
 		cumulativeChance = readArgs(args, true);
 	}
 

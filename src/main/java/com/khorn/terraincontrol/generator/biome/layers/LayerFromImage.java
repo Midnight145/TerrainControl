@@ -18,9 +18,9 @@ public class LayerFromImage extends Layer {
 	private int mapHeight;
 	private int mapWidth;
 	private int fillBiome = 0;
-	private int xOffset;
-	private int zOffset;
-	private WorldConfig.ImageMode imageMode;
+	private final int xOffset;
+	private final int zOffset;
+	private final WorldConfig.ImageMode imageMode;
 
 	public LayerFromImage(long seed, Layer childLayer, WorldConfig config, LocalWorld world) {
 		super(seed);

@@ -144,8 +144,8 @@ public class SmallLakeGen extends Resource {
 		if (getClass() != other.getClass())
 			return false;
 		final SmallLakeGen compare = (SmallLakeGen) other;
-		TerrainControl.log(LogMarker.DEBUG, "Equals::{}", new Object[] { this.minAltitude == compare.minAltitude
-				&& this.maxAltitude == compare.maxAltitude && Arrays.equals(this.BooleanBuffer, compare.BooleanBuffer) });
+		TerrainControl.log(LogMarker.DEBUG, "Equals::{}", this.minAltitude == compare.minAltitude
+				&& this.maxAltitude == compare.maxAltitude && Arrays.equals(this.BooleanBuffer, compare.BooleanBuffer));
 		return this.minAltitude == compare.minAltitude && this.maxAltitude == compare.maxAltitude
 				&& Arrays.equals(this.BooleanBuffer, compare.BooleanBuffer);
 	}

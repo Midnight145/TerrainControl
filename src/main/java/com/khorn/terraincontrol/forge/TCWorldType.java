@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.khorn.terraincontrol.LocalWorld;
 import com.khorn.terraincontrol.TerrainControl;
+import com.khorn.terraincontrol.logging.LogMarker;
 import com.khorn.terraincontrol.configuration.WorldConfig;
 import com.khorn.terraincontrol.configuration.WorldSettings;
 import com.khorn.terraincontrol.forge.generator.ForgeVanillaBiomeGenerator;
@@ -48,9 +49,9 @@ public class TCWorldType extends WorldType {
 		File worldDirectory = new File(world.getSaveHandler().getWorldDirectory(), "TerrainControl");
 
 		if (!worldDirectory.exists()) {
-			System.out.println("TerrainControl: settings does not exist, creating defaults");
+			TerrainControl.log(LogMarker.INFO, "Settings do not exist, creating defaults");
 
-			if (!worldDirectory.mkdirs()) { System.out.println("TerrainControl: cant create folder " + worldDirectory.getAbsolutePath()); }
+			if (!worldDirectory.mkdirs()) { TerrainControl.log(LogMarker.WARN, "Cannot create folder {}", worldDirectory.getAbsolutePath()); }
 		}
 
 		this.worldTC = new ForgeWorld(world.getSaveHandler().getWorldDirectoryName());

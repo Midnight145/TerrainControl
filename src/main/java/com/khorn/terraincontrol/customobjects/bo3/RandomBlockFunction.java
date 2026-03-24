@@ -63,13 +63,13 @@ public class RandomBlockFunction extends BlockFunction {
 
 	@Override
 	public String makeString() {
-		String text = "RandomBlock(" + x + "," + y + "," + z;
+		StringBuilder text = new StringBuilder("RandomBlock(" + x + "," + y + "," + z);
 		for (int i = 0; i < blockCount; i++) {
 			if (metaDataTags[i] == null) {
-				text += "," + blocks[i] + "," + blockChances[i];
+				text.append(",").append(blocks[i]).append(",").append(blockChances[i]);
 			}
 			else {
-				text += "," + blocks[i] + "," + metaDataNames[i] + "," + blockChances[i];
+				text.append(",").append(blocks[i]).append(",").append(metaDataNames[i]).append(",").append(blockChances[i]);
 			}
 		}
 		return text + ")";

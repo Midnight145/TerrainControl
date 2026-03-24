@@ -7,8 +7,8 @@ import com.khorn.terraincontrol.generator.biome.layers.Layer;
  * This is the normal biome mode, which has all of Terrain Control's features.
  */
 public class NormalBiomeGenerator extends BiomeGenerator {
-	private Layer unZoomedLayer;
-	private Layer biomeLayer;
+	private final Layer unZoomedLayer;
+	private final Layer biomeLayer;
 	private OutputType defaultOutputType = OutputType.FULL;
 
 	public NormalBiomeGenerator(LocalWorld world) {

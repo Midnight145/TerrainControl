@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Logger {
 
-	private org.apache.logging.log4j.Logger baseLogger;
+	private final org.apache.logging.log4j.Logger baseLogger;
 	public static final String PLUGIN_NAME = PluginStandardValues.ChannelName;
 	private Marker logLevel;
 

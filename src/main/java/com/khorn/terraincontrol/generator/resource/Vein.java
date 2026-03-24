@@ -13,7 +13,10 @@ import java.util.Random;
  *
  */
 class Vein {
-	private int x, y, z, size;
+	private final int x;
+    private final int y;
+    private final int z;
+    private final int size;
 
 	Vein(int blockX, int blockY, int blockZ, int size) {
 		this.x = blockX;

@@ -2,12 +2,13 @@ package com.khorn.terraincontrol.generator.noise;
 
 import com.khorn.terraincontrol.util.helpers.MathHelper;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class NoiseGeneratorPerlinOctaves {
 
-	private NoiseGeneratorPerlin[] a;
-	private int b;
+	private final NoiseGeneratorPerlin[] a;
+	private final int b;
 
 	public NoiseGeneratorPerlinOctaves(Random random, int i) {
 		this.b = i;
@@ -24,9 +25,7 @@ public class NoiseGeneratorPerlinOctaves {
 			doubleArray = new double[xSize * ySize * zSize];
 		}
 		else {
-			for (int k1 = 0; k1 < doubleArray.length; ++k1) {
-				doubleArray[k1] = 0.0D;
-			}
+			Arrays.fill(doubleArray, 0.0D);
 		}
 
 		double d3 = 1.0D;
@@ -59,9 +58,7 @@ public class NoiseGeneratorPerlinOctaves {
 			doubleArray = new double[xSize * zSize];
 		}
 		else {
-			for (int k1 = 0; k1 < doubleArray.length; ++k1) {
-				doubleArray[k1] = 0.0D;
-			}
+			Arrays.fill(doubleArray, 0.0D);
 		}
 
 		double d3 = 1.0D;

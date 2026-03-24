@@ -10,11 +10,14 @@ import com.khorn.terraincontrol.util.ChunkCoordinate;
 import com.khorn.terraincontrol.util.helpers.MathHelper;
 import com.khorn.terraincontrol.util.minecraftTypes.DefaultMaterial;
 
+import com.gtnewhorizon.gtnhlib.util.StdLCG;
+
 import java.util.Random;
 
 public class CanyonsGen extends TerrainGenBase {
-	private float[] a = new float[1024];
-	private WorldConfig worldSettings;
+	private final float[] a = new float[1024];
+	private final WorldConfig worldSettings;
+	private final StdLCG nodeRandom = new StdLCG();
 
 	public CanyonsGen(WorldConfig wrk, LocalWorld world) {
 		super(world);
@@ -23,7 +26,8 @@ public class CanyonsGen extends TerrainGenBase {
 
 	protected void a(long paramLong, ChunkBuffer generatingChunkBuffer, double paramDouble1, double paramDouble2, double paramDouble3,
 			float paramFloat1, float paramFloat2, float paramFloat3, int size, double paramDouble4) {
-		Random localRandom = new Random(paramLong);
+		Random localRandom = this.nodeRandom;
+		localRandom.setSeed(paramLong);
 
 		ChunkCoordinate generatingChunk = generatingChunkBuffer.getChunkCoordinate();
 		double d1 = generatingChunk.getBlockXCenter();

@@ -40,7 +40,7 @@ public class WeightedMobSpawnGroup {
 
 	public static List<WeightedMobSpawnGroup> fromJson(String originalJson) throws InvalidConfigException {
 		// Example: [{"mob": "Sheep", "weight": 12, "min": 4, "max": 4}]
-		List<WeightedMobSpawnGroup> mobGroups = new ArrayList<WeightedMobSpawnGroup>();
+		List<WeightedMobSpawnGroup> mobGroups = new ArrayList<>();
 
 		String json = originalJson.trim();
 		if (json.length() <= 2) {

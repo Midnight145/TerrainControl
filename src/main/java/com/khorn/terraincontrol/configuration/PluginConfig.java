@@ -21,7 +21,7 @@ public final class PluginConfig extends ConfigFile {
 
 	public ConfigMode SettingsMode;
 
-	public static enum LogLevels {
+	public enum LogLevels {
 
 		Off(LogMarker.ERROR, Level.ERROR.intLevel()), Quiet(LogMarker.WARN, Level.WARN.intLevel()),
 		Standard(LogMarker.INFO, Level.INFO.intLevel()), Debug(LogMarker.DEBUG, Level.DEBUG.intLevel()),
@@ -30,7 +30,7 @@ public final class PluginConfig extends ConfigFile {
 		private final Marker marker;
 		private final int value;
 
-		private LogLevels(Marker marker, int value) {
+		LogLevels(Marker marker, int value) {
 			this.marker = marker;
 			this.value = value;
 		}
@@ -63,8 +63,7 @@ public final class PluginConfig extends ConfigFile {
 	protected void correctSettings() {
 		if (!BiomeStandardValues.BiomeConfigExtensions.contains(this.biomeConfigExtension)) {
 			String newExtension = BiomeStandardValues.BIOME_CONFIG_EXTENSION.getDefaultValue();
-			TerrainControl.log(LogMarker.WARN, "BiomeConfig file extension {} is invalid, changing to {}",
-					new Object[] { this.biomeConfigExtension, newExtension });
+			TerrainControl.log(LogMarker.WARN, "BiomeConfig file extension {} is invalid, changing to {}", this.biomeConfigExtension, newExtension);
 			this.biomeConfigExtension = newExtension;
 		}
 

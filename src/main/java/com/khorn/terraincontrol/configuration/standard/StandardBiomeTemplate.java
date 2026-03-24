@@ -24,7 +24,7 @@ public class StandardBiomeTemplate {
 
 	public boolean isCustomBiome = true;
 
-	public String defaultExtends = "";
+	public final String defaultExtends = "";
 	public boolean defaultWaterLakes = true;
 	public Object[] defaultTree; // Parameters for tree resource
 	public int defaultDandelions = 2;
@@ -55,9 +55,9 @@ public class StandardBiomeTemplate {
 	public DefaultMaterial defaultGroundBlock = DefaultMaterial.DIRT;
 	public float defaultBiomeTemperature = 0.5F;
 	public float defaultBiomeWetness = 0.5F;
-	public ArrayList<String> defaultIsle = new ArrayList<String>();
-	public ArrayList<String> defaultBorder = new ArrayList<String>();
-	public ArrayList<String> defaultNotBorderNear = new ArrayList<String>();
+	public final ArrayList<String> defaultIsle = new ArrayList<>();
+	public final ArrayList<String> defaultBorder = new ArrayList<>();
+	public final ArrayList<String> defaultNotBorderNear = new ArrayList<>();
 	public String defaultRiverBiome = DefaultBiome.RIVER.Name;
 	public int defaultSize = 4;
 	public int defaultRarity = 100;
@@ -101,7 +101,7 @@ public class StandardBiomeTemplate {
 	public List<Resource> createDefaultResources(BiomeConfig config) {
 		int worldOreHeight = 128; // Should we make this dynamic for 8-bits
 									// scale worlds?
-		List<Resource> resources = new ArrayList<Resource>(32);
+		List<Resource> resources = new ArrayList<>(32);
 
 		// Small water lakes
 		if (this.defaultWaterLakes) {

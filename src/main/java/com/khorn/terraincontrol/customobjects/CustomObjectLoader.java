@@ -11,10 +11,10 @@ public interface CustomObjectLoader {
 	 * @param file
 	 * @return
 	 */
-	public CustomObject loadFromFile(String objectName, File file);
+    CustomObject loadFromFile(String objectName, File file);
 
 	/**
 	 * Called whenever Terrain Control is being shut down / reloaded.
 	 */
-	public void onShutdown();
+    void onShutdown();
 }

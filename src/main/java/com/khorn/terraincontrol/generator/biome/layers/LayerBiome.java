@@ -5,8 +5,8 @@ import com.khorn.terraincontrol.generator.biome.ArraysCache;
 
 public class LayerBiome extends Layer {
 
-	private LocalBiome[] biomes;
-	private LocalBiome[] ice_biomes;
+	private final LocalBiome[] biomes;
+	private final LocalBiome[] ice_biomes;
 
 	public LayerBiome(long seed, Layer childLayer, LocalBiome[] biomes, LocalBiome[] ice_biomes) {
 		super(seed);

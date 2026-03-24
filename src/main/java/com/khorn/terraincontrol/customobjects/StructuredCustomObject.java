@@ -16,7 +16,7 @@ public interface StructuredCustomObject extends CustomObject {
 	 * 
 	 * @return Whether this object has branches attached to it.
 	 */
-	public boolean hasBranches();
+    boolean hasBranches();
 
 	/**
 	 * Returns a list of all branches in this object. Null is not a valid
@@ -24,7 +24,7 @@ public interface StructuredCustomObject extends CustomObject {
 	 * 
 	 * @return A list of all branches in this object.
 	 */
-	public Branch[] getBranches(Rotation rotation);
+    Branch[] getBranches(Rotation rotation);
 
 	/**
 	 * Create a coordinate for this at a random position in the chunk.
@@ -34,7 +34,7 @@ public interface StructuredCustomObject extends CustomObject {
 	 * @param chunkZ The chunk z.
 	 * @return The CustomObjectCoordinate
 	 */
-	public CustomObjectCoordinate makeCustomObjectCoordinate(Random random, int chunkX, int chunkZ);
+    CustomObjectCoordinate makeCustomObjectCoordinate(Random random, int chunkX, int chunkZ);
 
 	/**
 	 * Branches can have branches which can have branches, etc. This
@@ -42,14 +42,14 @@ public interface StructuredCustomObject extends CustomObject {
 	 * 
 	 * @return The maximum branch depth.
 	 */
-	public int getMaxBranchDepth();
+    int getMaxBranchDepth();
 
 	/**
 	 * Returns the height at which the whole structure should spawn.
 	 * 
 	 * @return The height.
 	 */
-	public StructurePartSpawnHeight getStructurePartSpawnHeight();
+    StructurePartSpawnHeight getStructurePartSpawnHeight();
 
 	/**
 	 * Gets the bounding box of this object if it is rotated in the given way.
@@ -57,5 +57,5 @@ public interface StructuredCustomObject extends CustomObject {
 	 * @param rotation The rotation of the object.
 	 * @return The bounding box.
 	 */
-	public BoundingBox getBoundingBox(Rotation rotation);
+    BoundingBox getBoundingBox(Rotation rotation);
 }

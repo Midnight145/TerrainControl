@@ -162,7 +162,7 @@ public abstract class ConfigFile {
 	}
 
 	protected ArrayList<String> filterBiomes(List<String> biomes, Set<String> customBiomes) {
-		ArrayList<String> output = new ArrayList<String>();
+		ArrayList<String> output = new ArrayList<>();
 
 		for (String key : biomes) {
 			key = key.trim();

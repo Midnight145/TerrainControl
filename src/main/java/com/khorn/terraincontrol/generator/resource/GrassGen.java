@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 
 public class GrassGen extends Resource {
-	public static enum GroupOption {
+	public enum GroupOption {
 		Grouped, NotGrouped
 	}
 

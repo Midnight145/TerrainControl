@@ -55,8 +55,7 @@ public class PlayerTracker {
 			Class.forName("net.minecraft.client.Minecraft");
 		}
 		catch (final ClassNotFoundException exception) {
-			System.out.println(
-					"net.minecraft.client.Minecraft doesn't exist, assuming dedicated server. Sending configs");
+			TerrainControl.log(LogMarker.INFO, "Dedicated server detected, sending configs");
 			// Send the packet
 			player.playerNetServerHandler.sendPacket(packet);
 		}

@@ -51,7 +51,7 @@ public class WorldSettings implements ConfigProvider {
 	 * Holds all biomes that aren't virtual. These need to be sent to all
 	 * players on the server that have Terrain Control installed.
 	 */
-	private final Collection<LocalBiome> savedBiomes = new HashSet<LocalBiome>();
+	private final Collection<LocalBiome> savedBiomes = new HashSet<>();
 
 	/**
 	 * Set this to true to skip indexing of settings and avoiding tampering
@@ -102,7 +102,7 @@ public class WorldSettings implements ConfigProvider {
 
 	private void loadBiomes() {
 		// Establish folders
-		List<File> biomeDirs = new ArrayList<File>(2);
+		List<File> biomeDirs = new ArrayList<>(2);
 		// TerrainControl/worlds/<WorldName>/<WorldBiomes/
 		biomeDirs.add(new File(settingsDir, correctOldBiomeConfigFolder(settingsDir)));
 		// TerrainControl/GlobalBiomes/
@@ -111,8 +111,7 @@ public class WorldSettings implements ConfigProvider {
 		FileHelper.makeFolders(biomeDirs);
 
 		// Build a set of all biomes to load
-		Collection<BiomeLoadInstruction> biomesToLoad = new HashSet<BiomeLoadInstruction>();
-		biomesToLoad.addAll(world.getDefaultBiomes());
+        Collection<BiomeLoadInstruction> biomesToLoad = new HashSet<>(world.getDefaultBiomes());
 
 		// This adds all custombiomes that have been listed in WorldConfig to
 		// the arrayList
@@ -132,8 +131,8 @@ public class WorldSettings implements ConfigProvider {
 		// Save all settings
 		saveSettings();
 
-		TerrainControl.log(LogMarker.INFO, "{} biomes Loaded", new Object[] { biomesCount });
-		TerrainControl.log(LogMarker.DEBUG, "{}", new Object[] { loadedBiomeNames });
+		TerrainControl.log(LogMarker.INFO, "{} biomes Loaded", biomesCount);
+		TerrainControl.log(LogMarker.DEBUG, "{}", loadedBiomeNames);
 	}
 
 	@Override
@@ -191,8 +190,7 @@ public class WorldSettings implements ConfigProvider {
 			if (biomes[generationId] != null) {
 				TerrainControl.log(LogMarker.FATAL, "Duplicate biome id {} ({} and {})!", generationId, biomes[generationId].getName(),
 						biomeConfig.getName());
-				TerrainControl.log(LogMarker.FATAL, "The biome {} has been prevented from loading.",
-						new Object[] { biomeConfig.getName() });
+				TerrainControl.log(LogMarker.FATAL, "The biome {} has been prevented from loading.", biomeConfig.getName());
 				TerrainControl.log(LogMarker.INFO, "If you are updating an old pre-Minecraft 1.7 world, please read this wiki page:");
 				TerrainControl.log(LogMarker.INFO, "https://github.com/Wickth/TerrainControl/wiki/Upgrading-an-old-map-to-Minecraft-1.7");
 				continue;
@@ -250,7 +248,7 @@ public class WorldSettings implements ConfigProvider {
 
 			// Indexing BiomeColor
 			if (this.worldConfig.biomeMode == TerrainControl.getBiomeModeManager().FROM_IMAGE) {
-				if (this.worldConfig.biomeColorMap == null) { this.worldConfig.biomeColorMap = new HashMap<Integer, Integer>(); }
+				if (this.worldConfig.biomeColorMap == null) { this.worldConfig.biomeColorMap = new HashMap<>(); }
 
 				int color = biomeConfig.biomeColor;
 				this.worldConfig.biomeColorMap.put(color, biome.getIds().getGenerationId());
@@ -290,7 +288,8 @@ public class WorldSettings implements ConfigProvider {
 		BiomeConfig extendedBiomeConfig = allBiomeConfigs.get(extendedBiomeName);
 		if (extendedBiomeConfig == null) {
 			TerrainControl.log(LogMarker.WARN, "The biome {} tried to extend the biome {}, but that biome doesn't exist.",
-					new Object[] { biomeConfig.getName(), extendedBiomeName });
+                    biomeConfig.getName(),
+                    extendedBiomeName);
 			return;
 		}
 
@@ -298,7 +297,8 @@ public class WorldSettings implements ConfigProvider {
 		if (currentDepth > MAX_INHERITANCE_DEPTH) {
 			TerrainControl.log(LogMarker.FATAL,
 					"The biome {} cannot extend the biome {} - too much configs processed already! Cyclical inheritance?",
-					new Object[] { biomeConfig.getName(), extendedBiomeConfig.getName() });
+                    biomeConfig.getName(),
+                    extendedBiomeConfig.getName());
 		}
 
 		if (!extendedBiomeConfig.biomeExtendsProcessed) {
@@ -392,7 +392,7 @@ public class WorldSettings implements ConfigProvider {
 		stream.writeInt(worldConfig.WorldNightFog);
 
 		// Fetch all non-virtual custom biomes
-		Collection<LocalBiome> nonVirtualCustomBiomes = new ArrayList<LocalBiome>(worldConfig.customBiomeGenerationIds.size());
+		Collection<LocalBiome> nonVirtualCustomBiomes = new ArrayList<>(worldConfig.customBiomeGenerationIds.size());
 		for (Integer generationId : worldConfig.customBiomeGenerationIds.values()) {
 			LocalBiome biome = biomes[generationId];
 			if (!biome.getIds().isVirtual()) { nonVirtualCustomBiomes.add(biome); }

@@ -34,12 +34,12 @@ public class SimpleSurfaceGenerator implements SurfaceGenerator {
 	}
 
 	// Must be sorted based on the noise field
-	private List<LayerChoice> layerChoices;
+	private final List<LayerChoice> layerChoices;
 
 	public SimpleSurfaceGenerator(String[] args) throws InvalidConfigException {
 		if (args.length < 2) { throw new InvalidConfigException("Needs at least two arguments"); }
 
-		layerChoices = new ArrayList<LayerChoice>();
+		layerChoices = new ArrayList<>();
 		for (int i = 0; i < args.length - 2; i += 3) {
 			LocalMaterialData surfaceBlock = TerrainControl.readMaterial(args[i]);
 			LocalMaterialData groundBlock = TerrainControl.readMaterial(args[i + 1]);

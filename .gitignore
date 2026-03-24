@@ -51,6 +51,9 @@ platforms/forge/run
 
 /libs
 
+# Tests and gold data
+src/test/
+
 # Filesystem dust
 Thumbs.db
 .DS_Store

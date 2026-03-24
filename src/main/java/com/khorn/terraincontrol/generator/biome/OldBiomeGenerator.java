@@ -9,15 +9,15 @@ import java.util.Random;
 
 public class OldBiomeGenerator extends BiomeGenerator {
 
-	private NoiseGeneratorOldOctaves temperatureGenerator1;
-	private NoiseGeneratorOldOctaves wetnessGenerator;
-	private NoiseGeneratorOldOctaves temperatureGenerator2;
+	private final NoiseGeneratorOldOctaves temperatureGenerator1;
+	private final NoiseGeneratorOldOctaves wetnessGenerator;
+	private final NoiseGeneratorOldOctaves temperatureGenerator2;
 
 	public double[] oldTemperature1;
 	public double[] oldWetness;
 	private double[] oldTemperature2;
 
-	private static int[] biomeDiagram = new int[4096];
+	private static final int[] biomeDiagram = new int[4096];
 	private static boolean hasGeneratedBiomeDiagram;
 
 	public OldBiomeGenerator(LocalWorld world) {

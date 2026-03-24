@@ -22,7 +22,7 @@ import java.util.Map.Entry;
  */
 public class BO2 extends ConfigFile implements CustomObject {
 
-	public ObjectCoordinate[][] data = new ObjectCoordinate[4][];
+	public final ObjectCoordinate[][] data = new ObjectCoordinate[4][];
 
 	public BO2[] groupObjects = null;
 
@@ -286,7 +286,7 @@ public class BO2 extends ConfigFile implements CustomObject {
 	}
 
 	private void ReadCoordinates() {
-		ArrayList<ObjectCoordinate> coordinates = new ArrayList<ObjectCoordinate>();
+		ArrayList<ObjectCoordinate> coordinates = new ArrayList<>();
 
 		for (Entry<String, String> line : reader.getRawSettings()) {
 			ObjectCoordinate buffer = ObjectCoordinate.getCoordinateFromString(line.getKey(), line.getValue());

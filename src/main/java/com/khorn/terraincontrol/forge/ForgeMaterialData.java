@@ -13,16 +13,11 @@ import java.util.Map;
 
 /**
  * Implementation of LocalMaterial that wraps one of Minecraft's Blocks.
- * 
  */
 public class ForgeMaterialData implements LocalMaterialData {
-	/**
-	 * Caches all unique blocks with their BukkitMaterialData equivalent. If
-	 * uncached you'll easily see more than 50000 BukkitMaterialData instances
-	 * in memory. Doens't support block data yet, but this can maybe be added
-	 * in Minecraft 1.8 when BlockState instances are added.
-	 */
-	private static final Map<Block, ForgeMaterialData> CACHE = new IdentityHashMap<Block, ForgeMaterialData>();
+	private static final int MAX_BLOCK_IDS = TerrainControl.SUPPORTED_BLOCK_IDS;
+	private static final int MAX_DATA = 16;
+	private static final ForgeMaterialData[] CACHE = new ForgeMaterialData[MAX_BLOCK_IDS * MAX_DATA];
 
 	/**
 	 * Gets a {@code BukkitMaterialData} of the given id and data.
@@ -49,26 +44,20 @@ public class ForgeMaterialData implements LocalMaterialData {
 	/**
 	 * Gets a {@code BukkitMaterialData} of the given Minecraft block and data.
 	 * 
-	 * @param material The material.
 	 * @param data     The block data.
 	 * @return The {@code BukkitMateialData} instance.
 	 */
 	public static ForgeMaterialData ofMinecraftBlock(Block block, int data) {
-		if (data != 0) {
-			// Cache doens't support block data
-			return new ForgeMaterialData(block, data);
-		}
-
-		ForgeMaterialData cached = CACHE.get(block);
-		if (cached != null) {
-			// Found cache entry
+		int id = Block.getIdFromBlock(block);
+		if (id >= 0 && id < MAX_BLOCK_IDS && data >= 0 && data < MAX_DATA) {
+			int index = id * MAX_DATA + data;
+			ForgeMaterialData cached = CACHE[index];
+			if (cached != null) { return cached; }
+			cached = new ForgeMaterialData(block, data);
+			CACHE[index] = cached;
 			return cached;
 		}
-
-		// Create cache entry
-		ForgeMaterialData newObject = new ForgeMaterialData(block, data);
-		CACHE.put(block, newObject);
-		return newObject;
+		return new ForgeMaterialData(block, data);
 	}
 
 	private final Block block;

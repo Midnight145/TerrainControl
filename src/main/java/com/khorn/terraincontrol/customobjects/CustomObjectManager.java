@@ -52,7 +52,7 @@ public class CustomObjectManager {
 
 	public CustomObjectManager() {
 		// These are the actual lists, not just a copy.
-		this.loaders = new HashMap<String, CustomObjectLoader>();
+		this.loaders = new HashMap<>();
 
 		// Register loaders
 		registerCustomObjectLoader("bo2", new BO2Loader());

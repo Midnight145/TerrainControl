@@ -32,13 +32,13 @@ public class MesaSurfaceGenerator implements SurfaceGenerator {
 	}
 
 	private byte[] blockDataValuesArray;
-	private boolean isForestMesa;
-	private boolean isBryceMesa;
+	private final boolean isForestMesa;
+	private final boolean isBryceMesa;
 	private NoiseGeneratorNewOctaves noiseGenBryce1;
 	private NoiseGeneratorNewOctaves noiseGenBryce2;
 	private NoiseGeneratorNewOctaves noiseGenBlockData;
 
-	private Random random;
+	private final Random random;
 
 	private final LocalMaterialData hardenedClay;
 	private final LocalMaterialData redSand;

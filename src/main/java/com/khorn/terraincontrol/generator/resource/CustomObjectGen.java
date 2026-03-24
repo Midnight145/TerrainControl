@@ -11,6 +11,7 @@ import com.khorn.terraincontrol.util.ChunkCoordinate;
 import com.khorn.terraincontrol.util.helpers.StringHelper;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -22,11 +23,11 @@ public class CustomObjectGen extends Resource {
 	public void load(List<String> args) throws InvalidConfigException {
 		if (args.isEmpty() || (args.size() == 1 && args.get(0).trim().isEmpty())) {
 			// Backwards compatibility
-			args = new ArrayList<String>();
+			args = new ArrayList<>();
 			args.add("UseWorld");
 		}
-		objects = new ArrayList<CustomObject>();
-		objectNames = new ArrayList<String>();
+		objects = new ArrayList<>();
+		objectNames = new ArrayList<>();
 		for (String arg : args) {
 			CustomObject object = getHolder().worldConfig.worldObjects.parseCustomObject(arg);
 			if (object == null || !object.canSpawnAsObject()) {
@@ -59,7 +60,7 @@ public class CustomObjectGen extends Resource {
 		if (getClass() == other.getClass()) {
 			try {
 				CustomObjectGen otherO = (CustomObjectGen) other;
-				return otherO.objectNames.size() == this.objectNames.size() && otherO.objectNames.containsAll(this.objectNames);
+				return otherO.objectNames.size() == this.objectNames.size() && new HashSet<>(otherO.objectNames).containsAll(this.objectNames);
 			} catch (Exception ex) {
 				TerrainControl.log(LogMarker.WARN, ex.getMessage());
 			}

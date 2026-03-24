@@ -27,36 +27,17 @@ public interface StructurePartSpawnHeight {
 	/**
 	 * Use the y position provided in this object .
 	 */
-	public static final StructurePartSpawnHeight PROVIDED = new StructurePartSpawnHeight() {
-
-		@Override
-		public int getCorrectY(LocalWorld world, int x, int y, int z) {
-			return y;
-		}
-	};
+    StructurePartSpawnHeight PROVIDED = (world, x, y, z) -> y;
 
 	/**
 	 * Use the highest block on the x,z column
 	 */
-	public static final StructurePartSpawnHeight HIGHEST_BLOCK = new StructurePartSpawnHeight() {
-
-		@Override
-		public int getCorrectY(LocalWorld world, int x, int y, int z) {
-			return world.getHighestBlockYAt(x, z);
-		}
-
-	};
+    StructurePartSpawnHeight HIGHEST_BLOCK = (world, x, y, z) -> world.getHighestBlockYAt(x, z);
 
 	/**
 	 * Use the highest solid block on the x,z column
 	 */
-	public static final StructurePartSpawnHeight HIGHEST_SOLID_BLOCK = new StructurePartSpawnHeight() {
-
-		@Override
-		public int getCorrectY(LocalWorld world, int x, int y, int z) {
-			return world.getSolidHeight(x, z);
-		}
-	};
+    StructurePartSpawnHeight HIGHEST_SOLID_BLOCK = (world, x, y, z) -> world.getSolidHeight(x, z);
 
 	/**
 	 * Gets the correct y position for this part of the structure. An y
@@ -71,5 +52,5 @@ public interface StructurePartSpawnHeight {
 	 * @param z     The z position the object is spawning on.
 	 * @return The y position the object should spawn on instead.
 	 */
-	public int getCorrectY(LocalWorld world, int x, int y, int z);
+    int getCorrectY(LocalWorld world, int x, int y, int z);
 }

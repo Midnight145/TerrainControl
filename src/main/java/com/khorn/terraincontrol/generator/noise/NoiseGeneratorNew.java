@@ -4,13 +4,13 @@ import java.util.Random;
 
 public class NoiseGeneratorNew {
 
-	private static int[][] e = new int[][] { { 1, 1, 0 }, { -1, 1, 0 }, { 1, -1, 0 }, { -1, -1, 0 }, { 1, 0, 1 }, { -1, 0, 1 },
+	private static final int[][] e = new int[][] { { 1, 1, 0 }, { -1, 1, 0 }, { 1, -1, 0 }, { -1, -1, 0 }, { 1, 0, 1 }, { -1, 0, 1 },
 			{ 1, 0, -1 }, { -1, 0, -1 }, { 0, 1, 1 }, { 0, -1, 1 }, { 0, 1, -1 }, { 0, -1, -1 } };
 	public static final double a = Math.sqrt(3.0D);
-	private int[] f;
-	public double b;
-	public double c;
-	public double d;
+	private final short[] f;
+	public final double b;
+	public final double c;
+	public final double d;
 	private static final double g = 0.5D * (a - 1.0D);
 	private static final double h = (3.0D - a) / 6.0D;
 
@@ -19,20 +19,19 @@ public class NoiseGeneratorNew {
 	}
 
 	public NoiseGeneratorNew(Random random) {
-		this.f = new int[512];
+		this.f = new short[512];
 		this.b = random.nextDouble() * 256.0D;
 		this.c = random.nextDouble() * 256.0D;
 		this.d = random.nextDouble() * 256.0D;
 
 		int i;
 
-		for (i = 0; i < 256; this.f[i] = i++) {
-			;
-		}
+		for (i = 0; i < 256; this.f[i] = (short) i++) {
+        }
 
 		for (i = 0; i < 256; ++i) {
 			int j = random.nextInt(256 - i) + i;
-			int k = this.f[i];
+			short k = this.f[i];
 
 			this.f[i] = this.f[j];
 			this.f[j] = k;

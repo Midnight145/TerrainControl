@@ -26,7 +26,7 @@ public class InheritanceHelper {
 	 */
 	public static final <T, C extends ConfigFunction<T>> List<C> mergeLists(Collection<? extends C> childList,
 			Collection<? extends C> parentList) {
-		List<C> returnList = new ArrayList<C>(childList);
+		List<C> returnList = new ArrayList<>(childList);
 		for (C parentFunction : parentList) {
 			if (!hasAnalogousFunction(parentFunction, childList)) { returnList.add(parentFunction); }
 		}

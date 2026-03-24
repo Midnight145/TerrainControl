@@ -65,9 +65,7 @@ public class BiomeGenCustom extends BiomeGenBase {
 		this.addMobs(this.spawnableCreatureList, config.spawnCreatures);
 		this.addMobs(this.spawnableWaterCreatureList, config.spawnWaterCreatures);
 		this.addMobs(this.spawnableCaveCreatureList, config.spawnAmbientCreatures);
-		System.out.println("config.getName():" + config.getName());
-		
-		if (config.getName() == "Hell") {
+		if ("Hell".equals(config.getName())) {
 			final SpawnListEntry blazeEntry = new SpawnListEntry(EntityBlaze.class, 4, 2, 6);
 			this.spawnableMonsterList.add(blazeEntry);
 		}

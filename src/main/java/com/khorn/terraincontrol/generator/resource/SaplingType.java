@@ -17,7 +17,7 @@ public enum SaplingType {
 	All, Oak, Redwood, Birch, SmallJungle, BigJungle, RedMushroom, BrownMushroom, Acacia, DarkOak, HugeRedwood;
 
 	// Case insensitive index
-	private static Map<String, SaplingType> BY_NAME = new HashMap<String, SaplingType>();
+	private static final Map<String, SaplingType> BY_NAME = new HashMap<>();
 	static {
 		for (SaplingType type : values()) {
 			BY_NAME.put(type.name().toLowerCase(), type);

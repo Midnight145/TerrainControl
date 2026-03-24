@@ -32,9 +32,9 @@ public class SaplingGen extends ConfigFunction<BiomeConfig> {
 		saplingType = SaplingType.get(args.get(0));
 		if (saplingType == null) { throw new InvalidConfigException("Unknown sapling type " + args.get(0)); }
 
-		trees = new ArrayList<CustomObject>();
-		treeNames = new ArrayList<String>();
-		treeChances = new ArrayList<Integer>();
+		trees = new ArrayList<>();
+		treeNames = new ArrayList<>();
+		treeChances = new ArrayList<>();
 
 		for (int i = 1; i < args.size() - 1; i += 2) {
 			CustomObject object = getHolder().worldConfig.worldObjects.parseCustomObject(args.get(i));
@@ -48,10 +48,10 @@ public class SaplingGen extends ConfigFunction<BiomeConfig> {
 
 	@Override
 	public String makeString() {
-		String output = "Sapling(" + saplingType;
+		StringBuilder output = new StringBuilder("Sapling(" + saplingType);
 
 		for (int i = 0; i < treeNames.size(); i++) {
-			output += "," + treeNames.get(i) + "," + treeChances.get(i);
+			output.append(",").append(treeNames.get(i)).append(",").append(treeChances.get(i));
 		}
 		return output + ")";
 	}

@@ -16,7 +16,7 @@ import java.util.TreeMap;
  */
 public class PlantType {
 	// Builds lookup map
-	private static final Map<String, PlantType> LOOKUP_MAP = new TreeMap<String, PlantType>(String.CASE_INSENSITIVE_ORDER);
+	private static final Map<String, PlantType> LOOKUP_MAP = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
 	public static final PlantType Allium = register(new PlantType("Allium", DefaultMaterial.RED_ROSE, 2));
 	public static final PlantType AzureBluet = register(new PlantType("AzureBluet", DefaultMaterial.RED_ROSE, 3));

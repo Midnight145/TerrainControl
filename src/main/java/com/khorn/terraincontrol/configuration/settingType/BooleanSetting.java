@@ -14,7 +14,7 @@ class BooleanSetting extends Setting<Boolean> {
 
 	BooleanSetting(String name, boolean defaultValue) {
 		super(name);
-		this.defaultValue = Boolean.valueOf(defaultValue);
+		this.defaultValue = defaultValue;
 	}
 
 	@Override

@@ -16,7 +16,7 @@ import java.lang.reflect.Field;
 
 public class ForgeEngine extends TerrainControlEngine {
 
-	protected TCWorldType worldType;
+	protected final TCWorldType worldType;
 
 	public ForgeEngine(TCWorldType worldType) {
 		super(FMLCommonHandler.instance().getFMLLogger());
@@ -53,7 +53,7 @@ public class ForgeEngine extends TerrainControlEngine {
 			dataFolder = new File((File) minecraftDir.get(null), "mods" + File.separator + "TerrainControl");
 		} catch (Throwable e) {
 			dataFolder = new File("mods" + File.separator + "TerrainControl");
-			System.out.println("Could not reflect the Minecraft directory, save location may be unpredicatble.");
+			TerrainControl.log(LogMarker.WARN, "Could not reflect the Minecraft directory, save location may be unpredictable");
 			TerrainControl.printStackTrace(LogMarker.FATAL, e);
 		}
 		return dataFolder;

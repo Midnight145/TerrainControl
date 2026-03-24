@@ -62,7 +62,7 @@ public enum DefaultMaterial {
 	 *              prevent snowfall. Note: this isn't always equal to what
 	 *              Minecraft calls solid.
 	 */
-	private DefaultMaterial(int id, boolean solid) {
+    DefaultMaterial(int id, boolean solid) {
 		this.id = id;
 		this.solid = solid;
 	}
@@ -72,7 +72,7 @@ public enum DefaultMaterial {
 	 * 
 	 * @param id Id of the material.
 	 */
-	private DefaultMaterial(int id) {
+    DefaultMaterial(int id) {
 		this.id = id;
 		this.solid = true;
 	}
@@ -109,15 +109,15 @@ public enum DefaultMaterial {
 	/**
 	 * A DefaultMaterial lookup table with the material ID as the index
 	 */
-	private static DefaultMaterial[] lookupID;
+	private static final DefaultMaterial[] lookupID;
 	/**
 	 * A DefaultMaterial lookup table with the material name as the index
 	 */
-	private static Map<String, DefaultMaterial> lookupName;
+	private static final Map<String, DefaultMaterial> lookupName;
 
 	static {
 		lookupID = new DefaultMaterial[256];
-		lookupName = new TreeMap<String, DefaultMaterial>(String.CASE_INSENSITIVE_ORDER);
+		lookupName = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
 		for (DefaultMaterial material : DefaultMaterial.values()) {
 			lookupID[material.id] = material;

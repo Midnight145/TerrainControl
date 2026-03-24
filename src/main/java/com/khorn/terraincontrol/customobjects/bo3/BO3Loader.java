@@ -16,7 +16,7 @@ public class BO3Loader implements CustomObjectLoader {
 	 * A list of already loaded meta Tags. The path is the key, a NBT Tag is
 	 * the value.
 	 */
-	private static Map<String, NamedBinaryTag> loadedTags = new HashMap<String, NamedBinaryTag>();
+	private static final Map<String, NamedBinaryTag> loadedTags = new HashMap<>();
 
 	public BO3Loader() {
 		// Register BO3 ConfigFunctions

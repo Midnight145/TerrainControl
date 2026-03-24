@@ -22,6 +22,8 @@ import com.khorn.terraincontrol.util.ChunkCoordinate;
 import com.khorn.terraincontrol.util.helpers.MathHelper;
 import com.khorn.terraincontrol.util.minecraftTypes.DefaultMaterial;
 
+import com.gtnewhorizon.gtnhlib.util.StdLCG;
+
 import java.util.Random;
 
 // Please don`t remove this. This disable warnings about x+0 arithmetic
@@ -54,7 +56,7 @@ public class ChunkProviderTC {
 	private double[] noise2;
 	private double[] noise5;
 	private double[] noise6;
-	private float[] nearBiomeWeightArray;
+	private final float[] nearBiomeWeightArray;
 
 	private double riverVol;
 	private double riverHeight;
@@ -89,7 +91,7 @@ public class ChunkProviderTC {
 		this.heightCap = world.getHeightCap();
 		this.heightScale = world.getHeightScale();
 
-		this.random = new Random(world.getSeed());
+		this.random = new StdLCG(world.getSeed());
 
 		this.noiseGen1 = new NoiseGeneratorPerlinOctaves(this.random, 16);
 		this.noiseGen2 = new NoiseGeneratorPerlinOctaves(this.random, 16);

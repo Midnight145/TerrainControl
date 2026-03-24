@@ -72,8 +72,8 @@ public class FileSettingsReader implements SettingsReader {
 	public FileSettingsReader(String name, File file) {
 		this.name = name;
 		this.file = file;
-		this.settingsCache = new HashMap<String, StringOnLine>();
-		this.configFunctions = new ArrayList<StringOnLine>();
+		this.settingsCache = new HashMap<>();
+		this.configFunctions = new ArrayList<>();
 
 		readSettings();
 	}
@@ -85,7 +85,7 @@ public class FileSettingsReader implements SettingsReader {
 
 	@Override
 	public <T> List<ConfigFunction<T>> getConfigFunctions(T holder, boolean useFallback) {
-		List<ConfigFunction<T>> result = new ArrayList<ConfigFunction<T>>(configFunctions.size());
+		List<ConfigFunction<T>> result = new ArrayList<>(configFunctions.size());
 		ConfigFunctionsManager manager = TerrainControl.getConfigFunctionsManager();
 		for (StringOnLine configFunctionLine : configFunctions) {
 			String configFunctionString = configFunctionLine.string;
@@ -115,7 +115,7 @@ public class FileSettingsReader implements SettingsReader {
 
 	@Override
 	public Iterable<Entry<String, String>> getRawSettings() {
-		List<Entry<String, String>> lines = new ArrayList<Entry<String, String>>(this.settingsCache.size());
+		List<Entry<String, String>> lines = new ArrayList<>(this.settingsCache.size());
 		for (Entry<String, StringOnLine> rawSetting : this.settingsCache.entrySet()) {
 			lines.add(new Line(rawSetting.getKey(), rawSetting.getValue().string));
 		}

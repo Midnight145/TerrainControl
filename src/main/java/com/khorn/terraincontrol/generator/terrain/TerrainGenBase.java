@@ -7,6 +7,8 @@ import com.khorn.terraincontrol.generator.ChunkBuffer;
 import com.khorn.terraincontrol.util.ChunkCoordinate;
 import com.khorn.terraincontrol.util.minecraftTypes.DefaultMaterial;
 
+import com.gtnewhorizon.gtnhlib.util.StdLCG;
+
 import java.util.Random;
 
 public abstract class TerrainGenBase {
@@ -15,9 +17,9 @@ public abstract class TerrainGenBase {
 	protected final LocalMaterialData lava = TerrainControl.toLocalMaterialData(DefaultMaterial.STATIONARY_LAVA, 0);
 	protected final LocalMaterialData sandstone = TerrainControl.toLocalMaterialData(DefaultMaterial.SANDSTONE, 0);
 
-	protected int checkAreaSize = 8;
-	protected Random random = new Random();
-	protected LocalWorld world;
+	protected final int checkAreaSize = 8;
+	protected final Random random = new StdLCG();
+	protected final LocalWorld world;
 	private final long worldLong1;
 	private final long worldLong2;
 

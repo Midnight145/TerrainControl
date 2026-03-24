@@ -14,12 +14,12 @@ import java.util.Random;
  *
  */
 public class CustomObjectStructureCache {
-	private Map<ChunkCoordinate, CustomObjectStructure> structureCache;
+	private final Map<ChunkCoordinate, CustomObjectStructure> structureCache;
 	private LocalWorld world;
 
 	public CustomObjectStructureCache(LocalWorld world) {
 		this.world = world;
-		this.structureCache = new HashMap<ChunkCoordinate, CustomObjectStructure>();
+		this.structureCache = new HashMap<>();
 	}
 
 	public void reload(LocalWorld world) {

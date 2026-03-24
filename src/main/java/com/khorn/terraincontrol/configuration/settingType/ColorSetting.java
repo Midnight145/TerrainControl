@@ -13,7 +13,7 @@ import com.khorn.terraincontrol.exception.InvalidConfigException;
  *
  */
 class ColorSetting extends Setting<Integer> {
-	private int defaultValue;
+	private final int defaultValue;
 
 	ColorSetting(String name, String defaultValue) {
 		super(name);
@@ -27,7 +27,7 @@ class ColorSetting extends Setting<Integer> {
 	public Integer read(String string) throws InvalidConfigException {
 		try {
 			Integer integer = Integer.decode(string);
-			if (integer.intValue() > 0xffffff || integer.intValue() < 0) {
+			if (integer > 0xffffff || integer < 0) {
 				throw new InvalidConfigException("Color must have 6 hexadecimal digits");
 			}
 			return integer;
@@ -38,7 +38,7 @@ class ColorSetting extends Setting<Integer> {
 
 	@Override
 	public String write(Integer value) {
-		return "#" + Integer.toHexString(value.intValue() | 0x1000000).substring(1).toUpperCase();
+		return "#" + Integer.toHexString(value | 0x1000000).substring(1).toUpperCase();
 	}
 
 }

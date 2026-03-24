@@ -44,7 +44,7 @@ public abstract class Settings {
 	 * @see EnumSetting
 	 */
 	protected static final <T extends Enum<T>> Setting<T> enumSetting(String name, T defaultValue) {
-		return new EnumSetting<T>(name, defaultValue);
+		return new EnumSetting<>(name, defaultValue);
 	}
 
 	/**

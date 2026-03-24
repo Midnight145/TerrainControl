@@ -16,27 +16,27 @@ import java.util.List;
 import java.util.Random;
 
 public class RareBuildingGen extends MapGenStructure {
-	public List<BiomeGenBase> biomeList;
+	public final List<BiomeGenBase> biomeList;
 
 	/**
 	 * contains possible spawns for scattered features
 	 */
 	@SuppressWarnings("rawtypes")
-	private List scatteredFeatureSpawnList;
+	private final List scatteredFeatureSpawnList;
 
 	/**
 	 * the maximum distance between scattered features
 	 */
-	private int maxDistanceBetweenScatteredFeatures;
+	private final int maxDistanceBetweenScatteredFeatures;
 
 	/**
 	 * the minimum distance between scattered features
 	 */
-	private int minDistanceBetweenScatteredFeatures;
+	private final int minDistanceBetweenScatteredFeatures;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public RareBuildingGen(WorldSettings configs) {
-		biomeList = new ArrayList<BiomeGenBase>();
+		biomeList = new ArrayList<>();
 
 		for (LocalBiome biome : configs.biomes) {
 			if (biome == null)

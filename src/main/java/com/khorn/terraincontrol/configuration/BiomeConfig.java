@@ -88,9 +88,9 @@ public class BiomeConfig extends ConfigFile {
 	public int foliageColor;
 	public boolean foliageColorIsMultiplier;
 
-	public List<Resource> resourceSequence = new ArrayList<Resource>();
+	public final List<Resource> resourceSequence = new ArrayList<>();
 
-	private Map<SaplingType, SaplingGen> saplingGrowers = new EnumMap<SaplingType, SaplingGen>(SaplingType.class);
+	private final Map<SaplingType, SaplingGen> saplingGrowers = new EnumMap<>(SaplingType.class);
 
 	public ArrayList<CustomObject> biomeObjects;
 	public CustomStructureGen structureGen;
@@ -131,14 +131,14 @@ public class BiomeConfig extends ConfigFile {
 	public RareBuildingType rareBuildingType;
 
 	public final int generationId;
-	public StandardBiomeTemplate defaultSettings;
-	public WorldConfig worldConfig;
+	public final StandardBiomeTemplate defaultSettings;
+	public final WorldConfig worldConfig;
 
 	// Spawn Config
-	public List<WeightedMobSpawnGroup> spawnMonsters = new ArrayList<WeightedMobSpawnGroup>();
-	public List<WeightedMobSpawnGroup> spawnCreatures = new ArrayList<WeightedMobSpawnGroup>();
-	public List<WeightedMobSpawnGroup> spawnWaterCreatures = new ArrayList<WeightedMobSpawnGroup>();
-	public List<WeightedMobSpawnGroup> spawnAmbientCreatures = new ArrayList<WeightedMobSpawnGroup>();
+	public List<WeightedMobSpawnGroup> spawnMonsters = new ArrayList<>();
+	public List<WeightedMobSpawnGroup> spawnCreatures = new ArrayList<>();
+	public List<WeightedMobSpawnGroup> spawnWaterCreatures = new ArrayList<>();
+	public List<WeightedMobSpawnGroup> spawnAmbientCreatures = new ArrayList<>();
 
 	public BiomeConfig(SettingsReader reader, BiomeLoadInstruction loadInstruction, WorldConfig worldConfig) {
 		super(reader);
@@ -339,8 +339,8 @@ public class BiomeConfig extends ConfigFile {
 	}
 
 	private void ReadCustomObjectSettings() {
-		biomeObjects = new ArrayList<CustomObject>();
-		biomeObjectStrings = new ArrayList<String>();
+		biomeObjects = new ArrayList<>();
+		biomeObjectStrings = new ArrayList<>();
 
 		// Read from BiomeObjects setting
 		List<String> customObjectStrings = readSettings(BiomeStandardValues.BIOME_OBJECTS);
@@ -749,10 +749,8 @@ public class BiomeConfig extends ConfigFile {
 	}
 
 	private void WriteCustomObjects(SettingsWriter writer) throws IOException {
-		ArrayList<String> objectStrings = new ArrayList<String>(biomeObjectStrings.size());
-		for (String objectString : biomeObjectStrings) {
-			objectStrings.add(objectString);
-		}
+		ArrayList<String> objectStrings = new ArrayList<>(biomeObjectStrings.size());
+        objectStrings.addAll(biomeObjectStrings);
 		writer.setting(BiomeStandardValues.BIOME_OBJECTS, objectStrings);
 	}
 
@@ -856,7 +854,7 @@ public class BiomeConfig extends ConfigFile {
 
 		if (replacedBlocksValue.contains("=")) {
 			String[] values = replacedBlocksValue.split(",");
-			List<ReplacedBlocksInstruction> output = new ArrayList<ReplacedBlocksInstruction>();
+			List<ReplacedBlocksInstruction> output = new ArrayList<>();
 
 			for (String replacedBlock : values) {
 				try {
@@ -906,7 +904,7 @@ public class BiomeConfig extends ConfigFile {
 
 	private void addDefaultMobGroups(Setting<List<WeightedMobSpawnGroup>> setting, List<WeightedMobSpawnGroup> defaultGroups) {
 		List<WeightedMobSpawnGroup> emptyList = Collections.emptyList();
-		List<WeightedMobSpawnGroup> groups = new ArrayList<WeightedMobSpawnGroup>();
+		List<WeightedMobSpawnGroup> groups = new ArrayList<>();
 		groups.addAll(defaultGroups);
 		groups.addAll(reader.getSetting(setting, emptyList));
 		reader.putSetting(setting, groups);

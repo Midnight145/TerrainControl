@@ -93,7 +93,7 @@ public abstract class Resource extends ConfigFunction<BiomeConfig> {
 	 * @return A resource based on the given parameters.
 	 */
 	public static Resource createResource(BiomeConfig config, Class<? extends Resource> clazz, Object... args) {
-		List<String> stringArgs = new ArrayList<String>(args.length);
+		List<String> stringArgs = new ArrayList<>(args.length);
 		for (Object arg : args) {
 			stringArgs.add("" + arg);
 		}
@@ -101,16 +101,13 @@ public abstract class Resource extends ConfigFunction<BiomeConfig> {
 		Resource resource;
 		try {
 			resource = clazz.newInstance();
-		} catch (InstantiationException e) {
-			return null;
-		} catch (IllegalAccessException e) {
+		} catch (InstantiationException | IllegalAccessException e) {
 			return null;
 		}
-		try {
+        try {
 			resource.init(config, stringArgs);
 		} catch (InvalidConfigException e) {
-			TerrainControl.log(LogMarker.FATAL, "Invalid default resource! Please report! {}: {}",
-					new Object[] { clazz.getName(), e.getMessage() });
+			TerrainControl.log(LogMarker.FATAL, "Invalid default resource! Please report! {}: {}", clazz.getName(), e.getMessage());
 			TerrainControl.printStackTrace(LogMarker.FATAL, e);
 			throw new RuntimeException(e);
 		}

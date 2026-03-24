@@ -25,12 +25,12 @@ import java.util.Random;
 public abstract class TerrainControlEngine {
 
 	private BiomeModeManager biomeManagers;
-	private List<EventHandler> cancelableEventHandlers = new ArrayList<EventHandler>(5);
+	private List<EventHandler> cancelableEventHandlers = new ArrayList<>(5);
 	private ConfigFunctionsManager configFunctionsManager;
 	private CustomObjectManager customObjectManager;
-	private List<EventHandler> monitoringEventHandlers = new ArrayList<EventHandler>(5);
+	private List<EventHandler> monitoringEventHandlers = new ArrayList<>(5);
 	private PluginConfig pluginConfig;
-	private Logger logger;
+	private final Logger logger;
 
 	public TerrainControlEngine() {
 		logger = LogFactory.getLogger();

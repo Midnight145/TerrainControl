@@ -3,27 +3,28 @@ package com.khorn.terraincontrol.generator.noise;
 import java.util.Random;
 
 public class NoiseGeneratorOld {
-	private static int[][] d = { { 1, 1, 0 }, { -1, 1, 0 }, { 1, -1, 0 }, { -1, -1, 0 }, { 1, 0, 1 }, { -1, 0, 1 }, { 1, 0, -1 },
+	private static final int[][] d = { { 1, 1, 0 }, { -1, 1, 0 }, { 1, -1, 0 }, { -1, -1, 0 }, { 1, 0, 1 }, { -1, 0, 1 }, { 1, 0, -1 },
 			{ -1, 0, -1 }, { 0, 1, 1 }, { 0, -1, 1 }, { 0, 1, -1 }, { 0, -1, -1 } };
 
-	private int[] e = new int[512];
-	public double a;
-	public double b;
-	public double c;
+	private final short[] e;
+	public final double a;
+	public final double b;
+	public final double c;
 	private static final double f = 0.5D * (Math.sqrt(3.0D) - 1.0D);
 	private static final double g = (3.0D - Math.sqrt(3.0D)) / 6.0D;
 
 	public NoiseGeneratorOld(Random paramRandom) {
+		this.e = new short[512];
 		this.a = (paramRandom.nextDouble() * 256.0D);
 		this.b = (paramRandom.nextDouble() * 256.0D);
 		this.c = (paramRandom.nextDouble() * 256.0D);
 		for (int i = 0; i < 256; i++) {
-			this.e[i] = i;
+			this.e[i] = (short) i;
 		}
 
 		for (int i = 0; i < 256; i++) {
 			int j = paramRandom.nextInt(256 - i) + i;
-			int k = this.e[i];
+			short k = this.e[i];
 			this.e[i] = this.e[j];
 			this.e[j] = k;
 

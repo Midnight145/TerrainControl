@@ -5,10 +5,10 @@ import com.khorn.terraincontrol.TerrainControl;
 import com.khorn.terraincontrol.exception.InvalidConfigException;
 
 public class ObjectCoordinate {
-	public int x;
-	public int y;
-	public int z;
-	private int hash;
+	public final int x;
+	public final int y;
+	public final int z;
+	private final int hash;
 	public LocalMaterialData material;
 	public int BranchDirection;
 	public int BranchOdds;
@@ -72,9 +72,9 @@ public class ObjectCoordinate {
 
 			String workingDataString = value;
 			if (workingDataString.contains("#")) {
-				String stringSet[] = workingDataString.split("#");
+				String[] stringSet = workingDataString.split("#");
 				workingDataString = stringSet[0];
-				String branchData[] = stringSet[1].split("@");
+				String[] branchData = stringSet[1].split("@");
 				newCoordinate.BranchDirection = Integer.parseInt(branchData[0]);
 				newCoordinate.BranchOdds = Integer.parseInt(branchData[1]);
 
@@ -83,14 +83,11 @@ public class ObjectCoordinate {
 
 			return newCoordinate;
 
-		} catch (NumberFormatException e) {
-			return null;
-
-		} catch (InvalidConfigException e) {
+		} catch (NumberFormatException | InvalidConfigException e) {
 			return null;
 
 		}
 
-	}
+    }
 
 }

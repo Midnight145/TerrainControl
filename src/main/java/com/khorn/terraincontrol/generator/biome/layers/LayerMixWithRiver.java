@@ -26,9 +26,9 @@ public class LayerMixWithRiver extends Layer {
 		}
 	}
 
-	private ConfigProvider configs;
-	private int[] riverBiomes;
-	private Layer riverLayer;
+	private final ConfigProvider configs;
+	private final int[] riverBiomes;
+	private final Layer riverLayer;
 
 	@Override
 	public void initWorldGenSeed(long seed) {

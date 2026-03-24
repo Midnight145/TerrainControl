@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NetherFortressGen extends MapGenStructure {
-	public List<SpawnListEntry> spawnList = new ArrayList<SpawnListEntry>();
+	public final List<SpawnListEntry> spawnList = new ArrayList<>();
 
 	public NetherFortressGen() {
 		this.spawnList.add(new SpawnListEntry(EntityBlaze.class, 10, 2, 3));

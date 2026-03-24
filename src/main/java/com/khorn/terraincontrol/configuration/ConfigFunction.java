@@ -23,7 +23,7 @@ public abstract class ConfigFunction<T> {
 	 * @return
 	 */
 	public static final <T> ConfigFunction<T> create(T holder, Class<? extends ConfigFunction<T>> clazz, Object... args) {
-		List<String> stringArgs = new ArrayList<String>(args.length);
+		List<String> stringArgs = new ArrayList<>(args.length);
 		for (Object arg : args) {
 			stringArgs.add("" + arg);
 		}
@@ -31,12 +31,10 @@ public abstract class ConfigFunction<T> {
 		ConfigFunction<T> configFunction;
 		try {
 			configFunction = clazz.newInstance();
-		} catch (InstantiationException e) {
-			return null;
-		} catch (IllegalAccessException e) {
+		} catch (InstantiationException | IllegalAccessException e) {
 			return null;
 		}
-		configFunction.setHolder(holder);
+        configFunction.setHolder(holder);
 		try {
 			configFunction.load(stringArgs);
 		} catch (InvalidConfigException e) {

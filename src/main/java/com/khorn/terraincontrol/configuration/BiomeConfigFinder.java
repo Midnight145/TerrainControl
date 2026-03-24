@@ -45,10 +45,10 @@ public class BiomeConfigFinder {
 	 * @param biomesToLoad The biomes to load.
 	 */
 	public Map<String, BiomeConfig> loadBiomesFromDirectories(Collection<File> directories, Collection<BiomeLoadInstruction> biomesToLoad) {
-		Map<String, BiomeConfig> biomeConfigsStore = new HashMap<String, BiomeConfig>();
+		Map<String, BiomeConfig> biomeConfigsStore = new HashMap<>();
 
 		// Switch to a Map<String, LocalBiome>
-		Map<String, BiomeLoadInstruction> remainingBiomes = new HashMap<String, BiomeLoadInstruction>();
+		Map<String, BiomeLoadInstruction> remainingBiomes = new HashMap<>();
 		for (BiomeLoadInstruction biome : biomesToLoad) {
 			remainingBiomes.put(biome.getBiomeName(), biome);
 		}
@@ -147,8 +147,7 @@ public class BiomeConfigFinder {
 			return newFile;
 		}
 		else {
-			TerrainControl.log(LogMarker.INFO, "Failed to rename biome file {} to {}",
-					new Object[] { toRename.getAbsolutePath(), newFile.getAbsolutePath() });
+			TerrainControl.log(LogMarker.INFO, "Failed to rename biome file {} to {}", toRename.getAbsolutePath(), newFile.getAbsolutePath());
 			return toRename;
 		}
 	}

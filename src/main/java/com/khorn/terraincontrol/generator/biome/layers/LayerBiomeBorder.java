@@ -6,8 +6,8 @@ import com.khorn.terraincontrol.generator.biome.ArraysCache;
 
 public class LayerBiomeBorder extends Layer {
 
-	private boolean[][] bordersFrom;
-	private int[] bordersTo;
+	private final boolean[][] bordersFrom;
+	private final int[] bordersTo;
 
 	public LayerBiomeBorder(long seed, LocalWorld world) {
 		super(seed);

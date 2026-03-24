@@ -9,10 +9,10 @@ import java.util.*;
 import java.util.Map.Entry;
 
 public class MemorySettingsReader implements SettingsReader {
-	private final List<ConfigFunction<?>> configFunctions = new ArrayList<ConfigFunction<?>>();
+	private final List<ConfigFunction<?>> configFunctions = new ArrayList<>();
 	private SettingsReader fallback;
 	private final String name;
-	private final Map<Setting<?>, Object> settings = new HashMap<Setting<?>, Object>();
+	private final Map<Setting<?>, Object> settings = new HashMap<>();
 
 	public MemorySettingsReader(String name) {
 		this.name = name;

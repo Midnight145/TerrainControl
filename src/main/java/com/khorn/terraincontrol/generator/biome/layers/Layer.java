@@ -72,8 +72,8 @@ public abstract class Layer {
 		LocalBiome[][] IceBiomeMap = new LocalBiome[worldConfig.GenerationDepth + 1][];
 
 		for (int i = 0; i < worldConfig.GenerationDepth + 1; i++) {
-			ArrayList<LocalBiome> normalBiomes = new ArrayList<LocalBiome>();
-			ArrayList<LocalBiome> iceBiomes = new ArrayList<LocalBiome>();
+			ArrayList<LocalBiome> normalBiomes = new ArrayList<>();
+			ArrayList<LocalBiome> iceBiomes = new ArrayList<>();
 			for (LocalBiome biome : configs.getBiomeArray()) {
 				if (biome == null)
 					continue;
@@ -280,8 +280,7 @@ public abstract class Layer {
 																: (b == c && a != d ? b
 																		: (b == d && a != c ? b
 																				: (c == d && a != b ? c
-																						: this.getRandomInArray(
-																								new int[] { a, b, c, d }))))))))));
+																						: this.getRandomInArray(a, b, c, d))))))))));
 	}
 
 }

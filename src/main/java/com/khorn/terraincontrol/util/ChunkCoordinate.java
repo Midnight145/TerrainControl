@@ -46,7 +46,9 @@ public class ChunkCoordinate {
 
 	@Override
 	public int hashCode() {
-		return (chunkX >> 13) ^ chunkZ;
+		int i = 1664525 * this.chunkX + 1013904223;
+		int j = 1664525 * (this.chunkZ ^ -559038737) + 1013904223;
+		return i ^ j;
 	}
 
 	@Override
@@ -97,8 +99,7 @@ public class ChunkCoordinate {
 		// Because of the way Minecraft population works, objects should never
 		// be placed in the bottom left corner of a chunk. That's why this
 		// formula looks a bit overly complicated.
-		return new ChunkCoordinate(MathHelper.floor((blockX - CHUNK_HALF_X_SIZE) / (double) CHUNK_X_SIZE),
-				MathHelper.floor((blockZ - CHUNK_HALF_Z_SIZE) / (double) CHUNK_Z_SIZE));
+		return new ChunkCoordinate((blockX - CHUNK_HALF_X_SIZE) >> 4, (blockZ - CHUNK_HALF_Z_SIZE) >> 4);
 	}
 
 	/**
@@ -109,7 +110,7 @@ public class ChunkCoordinate {
 	 * @return The coordinates.
 	 */
 	public static ChunkCoordinate fromBlockCoords(int blockX, int blockZ) {
-		return new ChunkCoordinate(MathHelper.floor(blockX / (double) CHUNK_X_SIZE), MathHelper.floor(blockZ / (double) CHUNK_Z_SIZE));
+		return new ChunkCoordinate(blockX >> 4, blockZ >> 4);
 	}
 
 	public static ChunkCoordinate fromChunkCoords(int chunkX, int chunkZ) {
@@ -176,7 +177,6 @@ public class ChunkCoordinate {
 	 *         otherwise.
 	 */
 	public boolean populatesForBlock(int blockX, int blockZ) {
-		return coordsMatch(MathHelper.floor((blockX - CHUNK_HALF_X_SIZE) / (double) CHUNK_X_SIZE),
-				MathHelper.floor((blockZ - CHUNK_HALF_Z_SIZE) / (double) CHUNK_Z_SIZE));
+		return coordsMatch((blockX - CHUNK_HALF_X_SIZE) >> 4, (blockZ - CHUNK_HALF_Z_SIZE) >> 4);
 	}
 }

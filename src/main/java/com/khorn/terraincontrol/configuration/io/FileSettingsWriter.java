@@ -77,7 +77,7 @@ public class FileSettingsWriter implements SettingsWriter {
 				builder.append(' ');
 			flag = !flag;
 		}
-		writer.write("# |" + builder.toString() + "| #");
+		writer.write("# |" + builder + "| #");
 		writer.newLine();
 		writer.write("# +-----------------------------------------------------------------+ #");
 		writer.newLine();

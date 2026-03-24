@@ -17,14 +17,14 @@ public interface CustomObject {
 	 * @param otherObjectsInDirectory A map of all other objects in the
 	 *                                directory. Keys are lowercase.
 	 */
-	public void onEnable(Map<String, CustomObject> otherObjectsInDirectory);
+    void onEnable(Map<String, CustomObject> otherObjectsInDirectory);
 
 	/**
 	 * Returns the name of this object.
 	 *
 	 * @return The name, without the extension.
 	 */
-	public String getName();
+    String getName();
 
 	/**
 	 * Returns whether this object can spawn as a tree. UseWorld and UseBiome
@@ -32,7 +32,7 @@ public interface CustomObject {
 	 *
 	 * @return Whether this object can spawn as a tree.
 	 */
-	public boolean canSpawnAsTree();
+    boolean canSpawnAsTree();
 
 	/**
 	 * Returns whether this object can spawn from the CustomObject() resource.
@@ -40,7 +40,7 @@ public interface CustomObject {
 	 *
 	 * @return Whether this object can spawn as an object.
 	 */
-	public boolean canSpawnAsObject();
+    boolean canSpawnAsObject();
 
 	/**
 	 * Returns whether this object can be placed with a random rotation. If
@@ -48,7 +48,7 @@ public interface CustomObject {
 	 *
 	 * @return Whether this object can be placed with a random rotation.
 	 */
-	public boolean canRotateRandomly();
+    boolean canRotateRandomly();
 
 	/**
 	 * Spawns the object at the given position. It shouldn't execute any checks.
@@ -60,7 +60,7 @@ public interface CustomObject {
 	 * @return Whether the attempt was successful. (It should never fail, but you
 	 *         never know.)
 	 */
-	public boolean spawnForced(LocalWorld world, Random random, Rotation rotation, int x, int y, int z);
+    boolean spawnForced(LocalWorld world, Random random, Rotation rotation, int x, int y, int z);
 
 	/**
 	 * Returns whether the location would theoretically allow the object to
@@ -72,7 +72,7 @@ public interface CustomObject {
 	 * @param z     Z coord of the object origin.
 	 * @return Whether the location allows for this object.
 	 */
-	public boolean canSpawnAt(LocalWorld world, Rotation rotation, int x, int y, int z);
+    boolean canSpawnAt(LocalWorld world, Rotation rotation, int x, int y, int z);
 
 	/**
 	 * Spawns the object at the given position. It should search a suitable y
@@ -84,7 +84,7 @@ public interface CustomObject {
 	 * @param z
 	 * @return Whether the attempt was successful.
 	 */
-	public boolean spawnAsTree(LocalWorld world, Random random, int x, int z);
+    boolean spawnAsTree(LocalWorld world, Random random, int x, int z);
 
 	/**
 	 * Spawns the object one or more times in a chunk. The object can search a good
@@ -96,7 +96,7 @@ public interface CustomObject {
 	 * @param chunkCoord The chunk to spawn the objects in.
 	 * @return Whether at least one object spawned successfully.
 	 */
-	public boolean process(LocalWorld world, Random random, ChunkCoordinate chunkCoord);
+    boolean process(LocalWorld world, Random random, ChunkCoordinate chunkCoord);
 
 	/**
 	 * Creates a new object with all settings applied.
@@ -107,7 +107,7 @@ public interface CustomObject {
 	 *                 fallback}.
 	 * @return A copy of this object will all the settings applied.
 	 */
-	public CustomObject applySettings(SettingsReader settings);
+    CustomObject applySettings(SettingsReader settings);
 
 	/**
 	 * Returns whether this object would like to spawn in this biome. BO2s will
@@ -116,5 +116,5 @@ public interface CustomObject {
 	 * @param biome
 	 * @return
 	 */
-	public boolean hasPreferenceToSpawnIn(LocalBiome biome);
+    boolean hasPreferenceToSpawnIn(LocalBiome biome);
 }

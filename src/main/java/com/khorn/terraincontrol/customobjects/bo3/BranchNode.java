@@ -12,15 +12,15 @@ public class BranchNode implements Comparable<BranchNode> {
 	/**
 	 * The rotation of a branch
 	 */
-	private Rotation rotation;
+	private final Rotation rotation;
 	/**
 	 * The chance of a branch
 	 */
-	private double chance;
+	private final double chance;
 	/**
 	 * The branch with associated rotation and chance values
 	 */
-	private CustomObject customObject;
+	private final CustomObject customObject;
 
 	/**
 	 * Creates an instance of BranchNode with given rotation, chance, and branch

@@ -23,7 +23,7 @@ public class LogMarker {
 	public static final Marker DEBUG = MarkerManager.getMarker("com.khorn.terraincontrol.DEBUG", LogMarker.INFO);
 	public static final Marker TRACE = MarkerManager.getMarker("com.khorn.terraincontrol.TRACE", LogMarker.DEBUG);
 
-	private static Map<Marker, Integer> standardLevels = new LinkedHashMap<Marker, Integer>(6);
+	private static final Map<Marker, Integer> standardLevels = new LinkedHashMap<>(6);
 
 	private LogMarker() {}
 

@@ -10,10 +10,13 @@ import com.khorn.terraincontrol.util.ChunkCoordinate;
 import com.khorn.terraincontrol.util.helpers.MathHelper;
 import com.khorn.terraincontrol.util.minecraftTypes.DefaultMaterial;
 
+import com.gtnewhorizon.gtnhlib.util.StdLCG;
+
 import java.util.Random;
 
 public class CavesGen extends TerrainGenBase {
-	private WorldConfig worldSettings;
+	private final WorldConfig worldSettings;
+	private final StdLCG nodeRandom = new StdLCG();
 
 	public CavesGen(WorldConfig wrk, LocalWorld world) {
 		super(world);
@@ -33,7 +36,8 @@ public class CavesGen extends TerrainGenBase {
 		float f1 = 0.0F;
 		float f2 = 0.0F;
 
-		Random localRandom = new Random(seed);
+		Random localRandom = this.nodeRandom;
+		localRandom.setSeed(seed);
 
 		if (maxAngle <= 0) {
 			int checkAreaSize = this.checkAreaSize * 16 - 16;
@@ -140,6 +144,7 @@ public class CavesGen extends TerrainGenBase {
 				double d9 = (local_x + generatingChunk.getBlockX() + 0.5D - x) / d3;
 				for (int local_z = i3; local_z < i4; local_z++) {
 					LocalBiome biome = this.world.getBiome(local_x + generatingChunk.getBlockX(), local_z + generatingChunk.getBlockZ());
+					BiomeConfig biomeConfig = biome.getBiomeConfig();
 					double d10 = (local_z + generatingChunk.getBlockZ() + 0.5D - z) / d3;
 
 					boolean grassFound = false;
@@ -151,7 +156,7 @@ public class CavesGen extends TerrainGenBase {
 								LocalMaterialData materialAbove = generatingChunkBuffer.getBlock(local_x, local_y + 1, local_z);
 								if (material.isMaterial(DefaultMaterial.GRASS) || material.isMaterial(DefaultMaterial.MYCEL))
 									grassFound = true;
-								if (this.isSuitableBlock(material, materialAbove, biome)) {
+								if (this.isSuitableBlock(material, materialAbove, biomeConfig)) {
 									if (local_y - 1 < 10) {
 										generatingChunkBuffer.setBlock(local_x, local_y, local_z, lava);
 									}
@@ -170,7 +175,7 @@ public class CavesGen extends TerrainGenBase {
 										if (grassFound && (generatingChunkBuffer.getBlock(local_x, local_y - 1, local_z)
 												.isMaterial(DefaultMaterial.DIRT))) {
 											generatingChunkBuffer.setBlock(local_x, local_y - 1, local_z,
-													biome.getBiomeConfig().surfaceBlock);
+													biomeConfig.surfaceBlock);
 										}
 									}
 								}
@@ -184,8 +189,7 @@ public class CavesGen extends TerrainGenBase {
 		}
 	}
 
-	protected boolean isSuitableBlock(LocalMaterialData material, LocalMaterialData materialAbove, LocalBiome biome) {
-		BiomeConfig biomeConfig = biome.getBiomeConfig();
+	protected boolean isSuitableBlock(LocalMaterialData material, LocalMaterialData materialAbove, BiomeConfig biomeConfig) {
 		if (material.equals(biomeConfig.stoneBlock)) { return true; }
 		if (material.canFall()) { return !materialAbove.isLiquid(); }
 		if (material.equals(biomeConfig.groundBlock)) { return true; }

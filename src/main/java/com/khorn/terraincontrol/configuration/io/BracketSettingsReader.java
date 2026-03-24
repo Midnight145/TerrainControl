@@ -22,7 +22,7 @@ public class BracketSettingsReader implements SettingsReader {
 
 	public BracketSettingsReader(String name, String rawSettings) {
 		this.name = name;
-		this.settingsMap = new HashMap<String, String>();
+		this.settingsMap = new HashMap<>();
 
 		String[] settings = rawSettings.split(";");
 		for (String setting : settings) {

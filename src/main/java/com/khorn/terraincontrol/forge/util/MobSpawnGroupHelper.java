@@ -30,8 +30,7 @@ public final class MobSpawnGroupHelper {
 
 		@SuppressWarnings("unchecked")
 		Map<String, Class<? extends Entity>> nameToClassMap = (Map<String, Class<? extends Entity>>) EntityList.stringToClassMapping;
-		;
-		NAME_TO_CLASS_MAP = nameToClassMap;
+        NAME_TO_CLASS_MAP = nameToClassMap;
 	}
 
 	/**
@@ -86,7 +85,7 @@ public final class MobSpawnGroupHelper {
 	 * @return The WeightedMobSpawnGroup list.
 	 */
 	static List<WeightedMobSpawnGroup> fromMinecraftList(Collection<SpawnListEntry> biomeMetas) {
-		List<WeightedMobSpawnGroup> result = new ArrayList<WeightedMobSpawnGroup>();
+		List<WeightedMobSpawnGroup> result = new ArrayList<>();
 		for (SpawnListEntry meta : biomeMetas) {
 			result.add(fromMinecraftGroup(meta));
 		}
@@ -101,7 +100,7 @@ public final class MobSpawnGroupHelper {
 	 * @return The BiomeMeta list.
 	 */
 	public static List<SpawnListEntry> toMinecraftlist(Collection<WeightedMobSpawnGroup> weightedMobSpawnGroups) {
-		List<SpawnListEntry> biomeList = new ArrayList<SpawnListEntry>();
+		List<SpawnListEntry> biomeList = new ArrayList<>();
 		for (WeightedMobSpawnGroup mobGroup : weightedMobSpawnGroups) {
 			Class<? extends Entity> entityClass = toMinecraftClass(mobGroup.getInternalName());
 			if (entityClass != null) {

@@ -10,6 +10,7 @@ import com.khorn.terraincontrol.logging.LogMarker;
 import com.khorn.terraincontrol.util.ChunkCoordinate;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -40,9 +41,9 @@ public class TreeGen extends Resource {
 
 		frequency = readInt(args.get(0), 1, 100);
 
-		trees = new ArrayList<CustomObject>();
-		treeNames = new ArrayList<String>();
-		treeChances = new ArrayList<Integer>();
+		trees = new ArrayList<>();
+		treeNames = new ArrayList<>();
+		treeChances = new ArrayList<>();
 
 		for (int i = 1; i < args.size() - 1; i += 2) {
 			CustomObject object = getHolder().worldConfig.worldObjects.parseCustomObject(args.get(i));
@@ -56,9 +57,9 @@ public class TreeGen extends Resource {
 
 	@Override
 	public String makeString() {
-		String output = "Tree(" + frequency;
+		StringBuilder output = new StringBuilder("Tree(" + frequency);
 		for (int i = 0; i < treeNames.size(); i++) {
-			output += "," + treeNames.get(i) + "," + treeChances.get(i);
+			output.append(",").append(treeNames.get(i)).append(",").append(treeChances.get(i));
 		}
 		return output + ")";
 	}
@@ -73,7 +74,7 @@ public class TreeGen extends Resource {
 		if (getClass() == other.getClass()) {
 			try {
 				TreeGen otherO = (TreeGen) other;
-				return otherO.treeNames.size() == this.treeNames.size() && otherO.treeNames.containsAll(this.treeNames);
+				return otherO.treeNames.size() == this.treeNames.size() && new HashSet<>(otherO.treeNames).containsAll(this.treeNames);
 			} catch (Exception ex) {
 				TerrainControl.log(LogMarker.WARN, ex.getMessage());
 			}

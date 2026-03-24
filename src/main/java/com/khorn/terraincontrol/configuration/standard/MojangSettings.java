@@ -14,7 +14,7 @@ public interface MojangSettings {
 	/**
 	 * Represents the four mob type groups used by vanilla Minecraft.
 	 */
-	public static enum EntityCategory {
+    enum EntityCategory {
 		AMBIENT_CREATURE, WATER_CREATURE, CREATURE, MONSTER
 	}
 

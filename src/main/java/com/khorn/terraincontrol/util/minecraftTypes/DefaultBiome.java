@@ -219,9 +219,9 @@ public enum DefaultBiome {
 	/**
 	 * A DefaultBiome lookup table with the biome ID being the array index
 	 */
-	private static DefaultBiome[] lookupID;
+	private static final DefaultBiome[] lookupID;
 
-	private DefaultBiome(int i, String name, Class<? extends MinecraftBiomeTemplate> defaultSettings) {
+	DefaultBiome(int i, String name, Class<? extends MinecraftBiomeTemplate> defaultSettings) {
 		this.Id = i;
 		this.Name = name;
 		this.defaultSettingsClass = defaultSettings;

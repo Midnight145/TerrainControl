@@ -48,7 +48,7 @@ public class BranchFunction extends BO3Function implements Branch {
 		rotatedBranch.x = z;
 		rotatedBranch.y = y;
 		rotatedBranch.z = -x;
-		rotatedBranch.branches = new TreeSet<BranchNode>();
+		rotatedBranch.branches = new TreeSet<>();
 		for (BranchNode holder : this.branches) {
 			rotatedBranch.branches.add(new BranchNode(holder.getRotation().next(), holder.getChance(), holder.getCustomObject()));
 		}
@@ -57,16 +57,16 @@ public class BranchFunction extends BO3Function implements Branch {
 
 	@Override
 	public void load(List<String> args) throws InvalidConfigException {
-		branches = new TreeSet<BranchNode>();
+		branches = new TreeSet<>();
 		readArgs(args, false);
 	}
 
 	@Override
 	public String makeString() {
 		StringBuilder output = new StringBuilder(getConfigName()).append('(').append(x).append(',').append(y).append(',').append(z);
-		for (Iterator<BranchNode> it = branches.iterator(); it.hasNext();) {
-			output.append(it.next().toBranchString());
-		}
+        for (BranchNode branch : branches) {
+            output.append(branch.toBranchString());
+        }
 		if (totalChance != -1) { output.append(',').append(totalChance); }
 		return output.append(')').toString();
 	}
@@ -74,15 +74,14 @@ public class BranchFunction extends BO3Function implements Branch {
 	@Override
 	public CustomObjectCoordinate toCustomObjectCoordinate(LocalWorld world, Random random, int x, int y, int z) {
 		TerrainControl.log(LogMarker.TRACE, "Branch:");
-		for (Iterator<BranchNode> it = branches.iterator(); it.hasNext();) {
-			BranchNode branch = it.next();
-			double randomChance = random.nextDouble() * (totalChance != -1 ? totalChance : 100);
-			TerrainControl.log(LogMarker.TRACE, "  Needed: {} Obtained: {}", branch.getChance(), randomChance);
-			if (randomChance < branch.getChance()) {
-				TerrainControl.log(LogMarker.TRACE, "  Successful Spawn");
-				return new CustomObjectCoordinate(branch.getCustomObject(), branch.getRotation(), x + this.x, y + this.y, z + this.z);
-			}
-		}
+        for (BranchNode branch : branches) {
+            double randomChance = random.nextDouble() * (totalChance != -1 ? totalChance : 100);
+            TerrainControl.log(LogMarker.TRACE, "  Needed: {} Obtained: {}", branch.getChance(), randomChance);
+            if (randomChance < branch.getChance()) {
+                TerrainControl.log(LogMarker.TRACE, "  Successful Spawn");
+                return new CustomObjectCoordinate(branch.getCustomObject(), branch.getRotation(), x + this.x, y + this.y, z + this.z);
+            }
+        }
 		TerrainControl.log(LogMarker.TRACE, "  No Spawn");
 		return null;
 	}

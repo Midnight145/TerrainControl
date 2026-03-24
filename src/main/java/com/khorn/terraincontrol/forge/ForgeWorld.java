@@ -62,7 +62,7 @@ public class ForgeWorld implements LocalWorld {
 	private World world;
 	private WorldSettings settings;
 	private CustomObjectStructureCache structureCache;
-	private String name;
+	private final String name;
 	private long seed;
 	private BiomeGenerator biomeGenerator;
 
@@ -72,9 +72,9 @@ public class ForgeWorld implements LocalWorld {
 	private static final int MAX_SAVED_BIOMES_COUNT = 255;
 	private static final int STANDARD_WORLD_HEIGHT = 128;
 
-	private static BiomeGenBase[] biomesToRestore = new BiomeGenBase[BiomeGenBase.getBiomeGenArray().length];
+	private static final BiomeGenBase[] biomesToRestore = new BiomeGenBase[BiomeGenBase.getBiomeGenArray().length];
 
-	private HashMap<String, LocalBiome> biomeNames = new HashMap<String, LocalBiome>();
+	private final HashMap<String, LocalBiome> biomeNames = new HashMap<>();
 
 	public StrongholdGen strongholdGen;
 	public VillageGen villageGen;
@@ -165,7 +165,7 @@ public class ForgeWorld implements LocalWorld {
 	public Collection<BiomeLoadInstruction> getDefaultBiomes() {
 		// Loop through all default biomes and create the default
 		// settings for them
-		List<BiomeLoadInstruction> standardBiomes = new ArrayList<BiomeLoadInstruction>();
+		List<BiomeLoadInstruction> standardBiomes = new ArrayList<>();
 		for (DefaultBiome defaultBiome : DefaultBiome.values()) {
 			int id = defaultBiome.Id;
 			BiomeLoadInstruction instruction = defaultBiome.getLoadInstructions(ForgeMojangSettings.fromId(id), STANDARD_WORLD_HEIGHT);
@@ -228,7 +228,7 @@ public class ForgeWorld implements LocalWorld {
 		case HugeTaiga2:
 			return this.hugeTaigaTree2.generate(this.world, rand, x, y, z);
 		default:
-			throw new AssertionError("Failed to handle tree of type " + type.toString());
+			throw new AssertionError("Failed to handle tree of type " + type);
 		}
 	}
 
@@ -591,7 +591,11 @@ public class ForgeWorld implements LocalWorld {
 		}
 		else {
 			TerrainControl.log(LogMarker.DEBUG, "Skipping tile entity with id {}, cannot be placed at {},{},{} on id {}",
-					new Object[] { nmsTag.getString("id"), x, y, z, this.getMaterial(x, y, z) });
+                    nmsTag.getString("id"),
+                    x,
+                    y,
+                    z,
+                    this.getMaterial(x, y, z));
 		}
 	}
 

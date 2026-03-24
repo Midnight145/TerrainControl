@@ -20,8 +20,8 @@ public class CustomObjectCollection implements Iterable<CustomObject> {
 	 * Creates a new {@link CustomObjectCollection} instance with no loaded objects.
 	 */
 	public CustomObjectCollection() {
-		this.objects = new ArrayList<CustomObject>();
-		this.objectsByName = new HashMap<String, CustomObject>();
+		this.objects = new ArrayList<>();
+		this.objectsByName = new HashMap<>();
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class CustomObjectCollection implements Iterable<CustomObject> {
 			throw new IllegalArgumentException("Given file is not a directory: " + directory.getAbsolutePath());
 		}
 
-		Map<String, CustomObject> objects = new HashMap<String, CustomObject>();
+		Map<String, CustomObject> objects = new HashMap<>();
 
 		// Load all objects from the files and folders under the directory
 		for (File file : directory.listFiles()) {

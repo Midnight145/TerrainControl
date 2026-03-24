@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.Random;
 
 public class IceSpikeGen extends Resource {
-	public static enum SpikeType {
-		Basement, SmallSpike, HugeSpike;
-	}
+	public enum SpikeType {
+		Basement, SmallSpike, HugeSpike
+    }
 
 	private int maxAltitude;
 	private int minAltitude;

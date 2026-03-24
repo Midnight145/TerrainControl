@@ -24,12 +24,12 @@ import net.minecraft.world.chunk.IChunkProvider;
 
 public class ChunkProvider implements IChunkProvider {
 
-	private ForgeWorld world;
-	private World worldHandle;
+	private final ForgeWorld world;
+	private final World worldHandle;
 	private boolean TestMode = false;
 
-	private ChunkProviderTC generator;
-	private ObjectSpawner spawner;
+	private final ChunkProviderTC generator;
+	private final ObjectSpawner spawner;
 
 	/**
 	 * Used in {@link #fillBiomeArray(Chunk)}, to avoid creating

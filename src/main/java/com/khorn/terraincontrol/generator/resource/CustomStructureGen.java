@@ -14,6 +14,7 @@ import com.khorn.terraincontrol.util.ChunkCoordinate;
 import com.khorn.terraincontrol.util.Rotation;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -24,9 +25,9 @@ public class CustomStructureGen extends Resource {
 
 	@Override
 	public void load(List<String> args) throws InvalidConfigException {
-		objects = new ArrayList<StructuredCustomObject>();
-		objectNames = new ArrayList<String>();
-		objectChances = new ArrayList<Double>();
+		objects = new ArrayList<>();
+		objectNames = new ArrayList<>();
+		objectChances = new ArrayList<>();
 		for (int i = 0; i < args.size() - 1; i += 2) {
 			CustomObject object = getHolder().worldConfig.worldObjects.parseCustomObject(args.get(i));
 			if (object == null || !object.canSpawnAsObject()) {
@@ -70,9 +71,9 @@ public class CustomStructureGen extends Resource {
 	@Override
 	public String makeString() {
 		if (objects.isEmpty()) { return "CustomStructure()"; }
-		String output = "CustomStructure(" + objectNames.get(0) + "," + objectChances.get(0);
+		StringBuilder output = new StringBuilder("CustomStructure(" + objectNames.get(0) + "," + objectChances.get(0));
 		for (int i = 1; i < objectNames.size(); i++) {
-			output += "," + objectNames.get(i) + "," + objectChances.get(i);
+			output.append(",").append(objectNames.get(i)).append(",").append(objectChances.get(i));
 		}
 		return output + ")";
 	}
@@ -92,7 +93,7 @@ public class CustomStructureGen extends Resource {
 		if (getClass() == other.getClass()) {
 			try {
 				CustomStructureGen otherO = (CustomStructureGen) other;
-				return otherO.objectNames.size() == this.objectNames.size() && otherO.objectNames.containsAll(this.objectNames);
+				return otherO.objectNames.size() == this.objectNames.size() && new HashSet<>(otherO.objectNames).containsAll(this.objectNames);
 			} catch (Exception ex) {
 				TerrainControl.log(LogMarker.WARN, ex.getMessage());
 			}

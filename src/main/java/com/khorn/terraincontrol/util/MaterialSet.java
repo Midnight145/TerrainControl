@@ -16,14 +16,14 @@ import java.util.Set;
  * unknown.
  */
 public class MaterialSet {
-	private static String ALL_MATERIALS = "All";
-	private static String SOLID_MATERIALS = "Solid";
+	private static final String ALL_MATERIALS = "All";
+	private static final String SOLID_MATERIALS = "Solid";
 
 	private boolean allSolidMaterials = false;
 	private boolean allMaterials = false;
 
 	private int[] materialIntSet = new int[0];
-	private Set<MaterialSetEntry> materials = new LinkedHashSet<MaterialSetEntry>();
+	private final Set<MaterialSetEntry> materials = new LinkedHashSet<>();
 	private boolean intSetUpToDate = true;
 
 	/**

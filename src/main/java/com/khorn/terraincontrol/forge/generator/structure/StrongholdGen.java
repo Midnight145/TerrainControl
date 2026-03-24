@@ -18,11 +18,11 @@ import java.util.List;
 import java.util.Random;
 
 public class StrongholdGen extends MapGenStructure {
-	private List<BiomeGenBase> allowedBiomeGenBases;
+	private final List<BiomeGenBase> allowedBiomeGenBases;
 
 	private boolean ranBiomeCheck;
-	private ChunkCoordIntPair[] structureCoords;
-	private double distance;
+	private final ChunkCoordIntPair[] structureCoords;
+	private final double distance;
 	private int spread;
 
 	public StrongholdGen(WorldSettings configs) {
@@ -30,7 +30,7 @@ public class StrongholdGen extends MapGenStructure {
 		this.structureCoords = new ChunkCoordIntPair[configs.worldConfig.strongholdCount];
 		this.spread = configs.worldConfig.strongholdSpread;
 
-		allowedBiomeGenBases = new ArrayList<BiomeGenBase>();
+		allowedBiomeGenBases = new ArrayList<>();
 
 		for (LocalBiome biome : configs.biomes) {
 			if (biome == null)
@@ -89,7 +89,7 @@ public class StrongholdGen extends MapGenStructure {
 	 */
 	@Override
 	protected List<ChunkPosition> getCoordList() {
-		ArrayList<ChunkPosition> chunkPositions = new ArrayList<ChunkPosition>();
+		ArrayList<ChunkPosition> chunkPositions = new ArrayList<>();
 
 		for (ChunkCoordIntPair structureCoord : structureCoords) {
 			if (structureCoord != null) { chunkPositions.add(structureCoord.func_151349_a(64)); }

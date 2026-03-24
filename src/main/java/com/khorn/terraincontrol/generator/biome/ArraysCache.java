@@ -6,7 +6,7 @@ public class ArraysCache {
 
 	private final int[][] smallArrays = new int[128][];
 	private int smallArraysNext = 0;
-	private final ArrayList<int[]> bigArrays = new ArrayList<int[]>();
+	private final ArrayList<int[]> bigArrays = new ArrayList<>();
 	private int bigArraysNext = 0;
 
 	public boolean isFree = true;

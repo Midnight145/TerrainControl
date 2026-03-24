@@ -12,7 +12,7 @@ import java.util.List;
  */
 public abstract class StringHelper {
 	public static String join(final Collection<?> coll, final String glue) {
-		return join(coll.toArray(new Object[coll.size()]), glue);
+		return join(coll.toArray(new Object[0]), glue);
 	}
 
 	public static String join(final Object[] list, final String glue) {
@@ -100,7 +100,7 @@ public abstract class StringHelper {
 			return new String[0];
 		}
 
-		List<String> buffer = new LinkedList<String>();
+		List<String> buffer = new LinkedList<>();
 
 		int index = 0;
 		int lastFound = 0;

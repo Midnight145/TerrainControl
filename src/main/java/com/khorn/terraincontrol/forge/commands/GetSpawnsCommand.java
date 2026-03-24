@@ -28,7 +28,7 @@ public class GetSpawnsCommand extends CommandBase {
 		final EntityPlayerMP player = (EntityPlayerMP) sender;
 		final World world = player.worldObj;
 		final BiomeGenBase currentBiome = world.getBiomeGenForCoords((int) player.posX, (int) player.posZ);
-		final ArrayList<String> str = new ArrayList<String>();
+		final ArrayList<String> str = new ArrayList<>();
 		str.add("Ambient: ");
 		System.out.print("Ambient: ");
 		for (final Object obj : currentBiome.getSpawnableList(EnumCreatureType.ambient)) {

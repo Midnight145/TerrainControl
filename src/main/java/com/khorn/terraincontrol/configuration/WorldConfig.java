@@ -21,14 +21,9 @@ import java.util.Map.Entry;
 
 public class WorldConfig extends ConfigFile {
 	public final File settingsDir;
-	private final Comparator<Entry<String, Integer>> CBV = new Comparator<Entry<String, Integer>>() {
-		@Override
-		public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2) {
-			return o1.getValue() - o2.getValue();
-		}
-	};
+	private final Comparator<Entry<String, Integer>> CBV = (o1, o2) -> o1.getValue() - o2.getValue();
 
-	public Map<String, Integer> customBiomeGenerationIds = new HashMap<String, Integer>();
+	public final Map<String, Integer> customBiomeGenerationIds = new HashMap<>();
 
 	// Holds all world CustomObjects.
 	public final CustomObjectCollection worldObjects;
@@ -38,10 +33,10 @@ public class WorldConfig extends ConfigFile {
 	@Deprecated
 	public final List<CustomObject> customObjects;
 
-	public List<String> NormalBiomes = new ArrayList<String>();
-	public List<String> IceBiomes = new ArrayList<String>();
-	public List<String> IsleBiomes = new ArrayList<String>();
-	public List<String> BorderBiomes = new ArrayList<String>();
+	public List<String> NormalBiomes = new ArrayList<>();
+	public List<String> IceBiomes = new ArrayList<>();
+	public List<String> IsleBiomes = new ArrayList<>();
+	public List<String> BorderBiomes = new ArrayList<>();
 
 	public int maxSmoothRadius = 2;
 
@@ -463,7 +458,7 @@ public class WorldConfig extends ConfigFile {
 				}
 
 			} catch (NumberFormatException e) {
-				System.out.println("Wrong custom biome id settings: '" + biome + "'");
+				TerrainControl.log(LogMarker.WARN, "Wrong custom biome id settings: '{}'", biome);
 			}
 
 		}
@@ -838,15 +833,14 @@ public class WorldConfig extends ConfigFile {
 	}
 
 	private void WriteCustomBiomes(SettingsWriter writer) throws IOException {
-		List<String> output = new ArrayList<String>();
+		List<String> output = new ArrayList<>();
 		// Custom biome id
-		List<Entry<String, Integer>> cbi = new ArrayList<Entry<String, Integer>>(this.customBiomeGenerationIds.entrySet());
+		List<Entry<String, Integer>> cbi = new ArrayList<>(this.customBiomeGenerationIds.entrySet());
 		Collections.sort(cbi, CBV);
 		// Print all custom biomes
-		for (Iterator<Entry<String, Integer>> it = cbi.iterator(); it.hasNext();) {
-			Entry<String, Integer> entry = it.next();
-			output.add(entry.getKey() + ":" + entry.getValue());
-		}
+        for (Entry<String, Integer> entry : cbi) {
+            output.add(entry.getKey() + ":" + entry.getValue());
+        }
 		writer.setting(WorldStandardValues.CUSTOM_BIOMES, output);
 	}
 

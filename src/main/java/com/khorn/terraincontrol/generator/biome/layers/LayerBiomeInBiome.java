@@ -3,20 +3,20 @@ package com.khorn.terraincontrol.generator.biome.layers;
 import com.khorn.terraincontrol.LocalBiome;
 import com.khorn.terraincontrol.generator.biome.ArraysCache;
 
+import java.util.Arrays;
+
 public class LayerBiomeInBiome extends Layer {
 
 	public LocalBiome biome;
 	public int chance = 10;
 	public boolean inOcean = false;
 
-	public boolean[] biomeIsles = new boolean[1024];
+	public final boolean[] biomeIsles = new boolean[1024];
 
 	public LayerBiomeInBiome(long seed, Layer childLayer) {
 		super(seed);
 		this.child = childLayer;
-		for (int i = 0; i < this.biomeIsles.length; i++) {
-			this.biomeIsles[i] = false;
-		}
+        Arrays.fill(this.biomeIsles, false);
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class TreeObject implements CustomObject {
 				TerrainControl.WORLD_HEIGHT);
 	}
 
-	private TreeType type;
+	private final TreeType type;
 	private int minHeight = TerrainControl.WORLD_DEPTH;
 	private int maxHeight = TerrainControl.WORLD_HEIGHT;
 

@@ -9,11 +9,11 @@ import java.util.Map;
 
 public class ConfigFunctionsManager {
 
-	private Map<String, Class<? extends ConfigFunction<?>>> configFunctions;
+	private final Map<String, Class<? extends ConfigFunction<?>>> configFunctions;
 
 	public ConfigFunctionsManager() {
 		// Also store in this class
-		this.configFunctions = new HashMap<String, Class<? extends ConfigFunction<?>>>();
+		this.configFunctions = new HashMap<>();
 
 		// Add vanilla resources
 		registerConfigFunction("AboveWaterRes", AboveWaterGen.class);
@@ -61,7 +61,7 @@ public class ConfigFunctionsManager {
 	public <T> ConfigFunction<T> getConfigFunction(String name, T holder, List<String> args) {
 		// Get the class of the config function
 		Class<? extends ConfigFunction<?>> clazz = configFunctions.get(name.toLowerCase());
-		if (clazz == null) { return new ErroredFunction<T>(name, holder, args, "Resource type " + name + " not found"); }
+		if (clazz == null) { return new ErroredFunction<>(name, holder, args, "Resource type " + name + " not found"); }
 
 		// Get a config function
 		ConfigFunction<T> configFunction;
@@ -74,7 +74,7 @@ public class ConfigFunctionsManager {
 		// Check if config function is of the right type
 		boolean matchingTypes = holder.getClass().isAssignableFrom(configFunction.getHolderType());
 		if (!matchingTypes) {
-			return new ErroredFunction<T>(name, holder, args, "Resource " + name + " cannot be placed in this config file");
+			return new ErroredFunction<>(name, holder, args, "Resource " + name + " cannot be placed in this config file");
 		}
 
 		// Initialize the function

@@ -35,7 +35,7 @@ public class CustomObjectStructure {
 		random = RandomHelper.getRandomForCoords(start.getX(), start.getY(), start.getZ(), world.getSeed());
 
 		// Calculate all branches and add them to a list
-		objectsToSpawn = new LinkedHashMap<ChunkCoordinate, Set<CustomObjectCoordinate>>();
+		objectsToSpawn = new LinkedHashMap<>();
 		addToSpawnList(start); // Add the object itself
 		addBranches(start, 1);
 	}
@@ -67,7 +67,7 @@ public class CustomObjectStructure {
 
 		Set<CustomObjectCoordinate> objectsInChunk = objectsToSpawn.get(chunkCoordinate);
 		if (objectsInChunk == null) {
-			objectsInChunk = new LinkedHashSet<CustomObjectCoordinate>();
+			objectsInChunk = new LinkedHashSet<>();
 			objectsToSpawn.put(chunkCoordinate, objectsInChunk);
 		}
 		objectsInChunk.add(coordObject);

@@ -9,8 +9,8 @@ import com.khorn.terraincontrol.util.minecraftTypes.DefaultBiome;
 
 public class LayerMix extends Layer {
 
-	private ConfigProvider configs;
-	private int[] riverBiomes;
+	private final ConfigProvider configs;
+	private final int[] riverBiomes;
 
 	public LayerMix(long seed, Layer childLayer, ConfigProvider configs, LocalWorld world) {
 		super(seed);

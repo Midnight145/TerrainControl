@@ -16,7 +16,7 @@ public interface Loggable {
 	 * @param level   The severity of the message
 	 * @param message The messages to log
 	 */
-	public void log(Marker level, String... message);
+    void log(Marker level, String... message);
 
 	/**
 	 * Logs a format string message with the given importance. Message will
@@ -29,7 +29,7 @@ public interface Loggable {
 	 * @param params  The parameters belonging to {0...} in the message
 	 *                string
 	 */
-	public void log(Marker level, String message, Object... params);
+    void log(Marker level, String message, Object... params);
 
 	/**
 	 * Logs the message(s) with the given importance <b>ONLY IF</b> logger
@@ -40,7 +40,7 @@ public interface Loggable {
 	 * @param ifLevel  the Log level to test for
 	 * @param messages The messages to log.
 	 */
-	public void logIfLevel(Marker ifLevel, String... messages);
+    void logIfLevel(Marker ifLevel, String... messages);
 
 	/**
 	 * Logs the message(s) with the given importance <b>ONLY IF</b> logger
@@ -54,7 +54,7 @@ public interface Loggable {
 	 * @param params  The parameters belonging to {0...} in the message
 	 *                string
 	 */
-	public void logIfLevel(Marker ifLevel, String message, Object... params);
+    void logIfLevel(Marker ifLevel, String message, Object... params);
 
 	/**
 	 * Logs the message(s) with the given importance <b>ONLY IF</b> logger
@@ -66,7 +66,7 @@ public interface Loggable {
 	 * @param max      The maximum Log level to test for
 	 * @param messages The messages to log.
 	 */
-	public void logIfLevel(Marker min, Marker max, String... messages);
+    void logIfLevel(Marker min, Marker max, String... messages);
 
 	/**
 	 * Logs the message(s) with the given importance <b>ONLY IF</b> logger
@@ -81,6 +81,6 @@ public interface Loggable {
 	 * @param params  The parameters belonging to {0...} in the message
 	 *                string
 	 */
-	public void logIfLevel(Marker min, Marker max, String message, Object... params);
+    void logIfLevel(Marker min, Marker max, String message, Object... params);
 
 }

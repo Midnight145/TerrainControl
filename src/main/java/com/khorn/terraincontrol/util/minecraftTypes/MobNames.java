@@ -24,7 +24,7 @@ public enum MobNames {
 	FIREBAT("Thaumcraft.Firebat", "Firebat");
 
 	// Contains all aliases (alias, internalName)
-	private static Map<String, String> mobAliases = new HashMap<String, String>();
+	private static final Map<String, String> mobAliases = new HashMap<>();
 
 	// Auto-register all aliases in the enum
 	static {
@@ -58,10 +58,10 @@ public enum MobNames {
 		}
 	}
 
-	private String[] aliases;
-	private String internalMinecraftName;
+	private final String[] aliases;
+	private final String internalMinecraftName;
 
-	private MobNames(String internalMinecraftName, String... aliases) {
+	MobNames(String internalMinecraftName, String... aliases) {
 		this.internalMinecraftName = internalMinecraftName;
 		this.aliases = aliases;
 	}

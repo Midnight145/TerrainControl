@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class BO3Config extends ConfigFile {
 
-	public Map<String, CustomObject> otherObjectsInDirectory;
+	public final Map<String, CustomObject> otherObjectsInDirectory;
 	public String author;
 	public String description;
 	public ConfigMode settingsMode;
@@ -39,13 +39,13 @@ public class BO3Config extends ConfigFile {
 	public MaterialSet sourceBlocks;
 	public int maxPercentageOutsideSourceBlock;
 	public OutsideSourceBlock outsideSourceBlock;
-	public BlockFunction[][] blocks = new BlockFunction[4][]; // four
+	public final BlockFunction[][] blocks = new BlockFunction[4][]; // four
 																// rotations
-	public BO3Check[][] bo3Checks = new BO3Check[4][];
+	public final BO3Check[][] bo3Checks = new BO3Check[4][];
 	public int maxBranchDepth;
-	public BranchFunction[][] branches = new BranchFunction[4][];
+	public final BranchFunction[][] branches = new BranchFunction[4][];
 
-	public BoundingBox[] boundingBoxes = new BoundingBox[4];
+	public final BoundingBox[] boundingBoxes = new BoundingBox[4];
 
 	/**
 	 * Creates a BO3Config from a file.
@@ -146,7 +146,7 @@ public class BO3Config extends ConfigFile {
 		minHeight = readSettings(BO3Settings.MIN_HEIGHT);
 		maxHeight = readSettings(BO3Settings.MAX_HEIGHT);
 		maxBranchDepth = readSettings(BO3Settings.MAX_BRANCH_DEPTH);
-		excludedBiomes = new ArrayList<String>(readSettings(BO3Settings.EXCLUDED_BIOMES));
+		excludedBiomes = new ArrayList<>(readSettings(BO3Settings.EXCLUDED_BIOMES));
 
 		sourceBlocks = readSettings(BO3Settings.SOURCE_BLOCKS);
 		maxPercentageOutsideSourceBlock = readSettings(BO3Settings.MAX_PERCENTAGE_OUTSIDE_SOURCE_BLOCK);
@@ -158,9 +158,9 @@ public class BO3Config extends ConfigFile {
 
 	private void readResources() {
 		BoundingBox box = BoundingBox.newEmptyBox();
-		List<BlockFunction> tempBlocksList = new ArrayList<BlockFunction>();
-		List<BO3Check> tempChecksList = new ArrayList<BO3Check>();
-		List<BranchFunction> tempBranchesList = new ArrayList<BranchFunction>();
+		List<BlockFunction> tempBlocksList = new ArrayList<>();
+		List<BO3Check> tempChecksList = new ArrayList<>();
+		List<BranchFunction> tempBranchesList = new ArrayList<>();
 
 		for (ConfigFunction<BO3Config> res : reader.getConfigFunctions(this, true)) {
 			if (res.isValid()) {
@@ -180,9 +180,9 @@ public class BO3Config extends ConfigFile {
 		}
 
 		// Store the blocks
-		blocks[0] = tempBlocksList.toArray(new BlockFunction[tempBlocksList.size()]);
-		bo3Checks[0] = tempChecksList.toArray(new BO3Check[tempChecksList.size()]);
-		branches[0] = tempBranchesList.toArray(new BranchFunction[tempBranchesList.size()]);
+		blocks[0] = tempBlocksList.toArray(new BlockFunction[0]);
+		bo3Checks[0] = tempChecksList.toArray(new BO3Check[0]);
+		branches[0] = tempBranchesList.toArray(new BranchFunction[0]);
 		boundingBoxes[0] = box;
 	}
 

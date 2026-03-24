@@ -100,11 +100,11 @@ public class ReplacedBlocksMatrix {
 
 		// Parse
 		if (setting.isEmpty() || setting.equalsIgnoreCase(NO_REPLACE)) {
-			setInstructions(Collections.<ReplacedBlocksInstruction>emptyList());
+			setInstructions(Collections.emptyList());
 			return;
 		}
 
-		List<ReplacedBlocksInstruction> instructions = new ArrayList<ReplacedBlocksInstruction>();
+		List<ReplacedBlocksInstruction> instructions = new ArrayList<>();
 		String[] keys = StringHelper.readCommaSeperatedString(setting);
 
 		for (String key : keys) {
@@ -151,7 +151,7 @@ public class ReplacedBlocksMatrix {
 	 * @param instructions The new instructions.
 	 */
 	public void setInstructions(Collection<ReplacedBlocksInstruction> instructions) {
-		this.instructions = Collections.unmodifiableList(new ArrayList<ReplacedBlocksInstruction>(instructions));
+		this.instructions = Collections.unmodifiableList(new ArrayList<>(instructions));
 
 		if (this.instructions.size() == 0) {
 			this.compiledInstructions = null;
